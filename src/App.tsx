@@ -1,42 +1,30 @@
+import 'react-native-gesture-handler';
 import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Button,
-  Text,
-  StatusBar,
-} from 'react-native';
+import {StyleSheet} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+import IndexScreen from './screens/Main';
+import LayoutScreen from './screens/Layout';
+import Globalstyle from '@constants/style';
+const Stack = createStackNavigator();
 
-const Index: React.FC = () => {
+const App = () => {
   return (
-    <View style={styles.container}>
-      <View style={styles.halfHeight}>
-        <Text>안녕하세요</Text>
-      </View>
-      <View style={styles.halfHeight}>
-        <Text>안녕하세요</Text>
-      </View>
-      <View style={styles.halfHeight}>
-        <Text>안녕하세요</Text>
-      </View>
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: Globalstyle.MAIN_DARK,
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }}>
+        <Stack.Screen name="Home" component={IndexScreen} />
+        <Stack.Screen name="Layout" component={LayoutScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
-export default Index;
-
-var styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'column',
-  },
-  halfHeight: {
-    flex: 0.5,
-    backgroundColor: '#FF3366',
-  },
-  quarterHeight: {
-    flex: 0.25,
-    backgroundColor: '#000',
-  },
-});
+export default App;
