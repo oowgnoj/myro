@@ -11,9 +11,11 @@ module.exports = {
         alias: {
           '@components': './src/components',
           '@containers': './src/containers',
+          '@screens': './src/components/screens',
           '@atoms': './src/components/atoms',
           '@molecules': './src/components/molecules',
-          '@screens': './src/components/screens',
+          '@organisms': './src/components/organisms',
+          '@constants': './src/constants',
         },
       },
     ],
