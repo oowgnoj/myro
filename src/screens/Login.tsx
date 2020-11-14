@@ -5,8 +5,8 @@ import {
   NavigationScreenProp,
   NavigationState,
 } from 'react-navigation';
-
 import Layout from './Layout';
+import useAuth from '../hooks/useAuth';
 import globalstyle from '@constants/style';
 
 type Props = {
@@ -15,9 +15,14 @@ type Props = {
 const MyHabits: React.FC<Props> = ({navigation}) => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const {saveToken} = useAuth();
   const handleEmail = (email) => setEmail(email);
   const handlePwd = (pwd) => setPassword(pwd);
-  const MoveToSignup = () => navigation.navigate('Signup');
+  const moveToSignup = () => navigation.navigate('Signup');
+  const signInAsync = async () => {
+    await saveToken('abc');
+    navigation.navigate('Main');
+  };
   return (
     <Layout>
       <View style={styles.root}>
@@ -30,7 +35,7 @@ const MyHabits: React.FC<Props> = ({navigation}) => {
         </View>
         <TextInput
           placeholder="Email or Username"
-          placeholderTextColor="#fff"
+          placeholderTextColor={globalstyle.MAIN_WHITE}
           style={styles.textinput}
           onChangeText={(email) => handleEmail(email)}
         />
@@ -39,15 +44,15 @@ const MyHabits: React.FC<Props> = ({navigation}) => {
           secureTextEntry={true}
           style={styles.textinput}
           onChangeText={(pwd) => handlePwd(pwd)}
-          placeholderTextColor="#fff"
+          placeholderTextColor={globalstyle.MAIN_WHITE}
         />
         <Button
-          onPress={() => console.log('hello')}
+          onPress={signInAsync}
           title="continue"
           color={globalstyle.MAIN_GREEN}
         />
         <Button
-          onPress={MoveToSignup}
+          onPress={moveToSignup}
           title="register"
           color={globalstyle.MAIN_GREEN}
         />
@@ -67,15 +72,15 @@ const styles = StyleSheet.create({
     marginBottom: 50,
   },
   titleText: {
-    color: '#fff',
+    color: globalstyle.MAIN_WHITE,
     fontSize: 30,
     fontWeight: 'bold',
   },
   textinput: {
-    borderBottomColor: '#fff',
+    borderBottomColor: globalstyle.MAIN_WHITE,
     borderBottomWidth: 1,
     height: 30,
-    color: '#fff',
+    color: globalstyle.MAIN_WHITE,
     marginBottom: 30,
   },
 });

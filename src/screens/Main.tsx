@@ -4,11 +4,9 @@ import {
   NavigationParams,
   NavigationScreenProp,
   NavigationState,
-  NavigationContainer,
 } from 'react-navigation';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Layout from './Layout';
-import Banner from '@components/atoms/ImageWithText';
+import Banner from '@atoms/ImageWithText';
 import ContentsList from '@organisms/ContentsList';
 
 const MockBanner = {

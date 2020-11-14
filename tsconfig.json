@@ -39,12 +39,15 @@
     "baseUrl": "." /* Base directory to resolve non-absolute module names. */,
     "paths": {
       "@components/*": ["./src/components/*"],
+      "@components": ["./src/components/"],
       "@containers/*": ["./src/containers/*"],
       "@screens/*": ["./src/screens/*"],
+      "@screens": ["./src/screens"],
       "@atoms/*": ["./src/components/atoms/*"],
       "@molecules/*": ["./src/components/molecules/*"],
       "@organisms/*": ["./src/components/organisms/*"],
       "@constants/*": ["./src/constants/*"],
+      "@hooks/*": ["./src/hooks/*"],
       "assets/*": ["./src/assets/*"],
       "utils/*": ["./src/utils/*"],
       "models/*": ["./src/models/*"]

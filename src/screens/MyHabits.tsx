@@ -61,8 +61,8 @@ const MyHabits: React.FC<Props> = ({navigation}) => {
     <Layout>
       <View style={styles.root}>
         <ScrollView>
-          <View style={styles.TextArea}>
-            <Text style={styles.titleText}>My Habits</Text>
+          <View style={styles.textArea}>
+            <Text style={styles.title}>My Habits</Text>
           </View>
           <View style={styles.ContentsArea}>
             <MyContentsList Contents={Contents} />
@@ -77,7 +77,7 @@ export default MyHabits;
 
 const styles = StyleSheet.create({
   root: {flex: 1},
-  TextArea: {
+  textArea: {
     marginBottom: 30,
   },
   BannerArea: {
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   ContentsArea: {},
-  titleText: {
+  title: {
     color: '#fff',
     fontSize: 30,
     fontWeight: 'bold',

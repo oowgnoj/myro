@@ -6,7 +6,7 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
-
+import globalstyle from '@constants/style';
 interface Props {
   image?: string;
   titleText: string;
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   text: {
-    color: '#fff',
+    color: globalstyle.MAIN_WHITE,
     marginLeft: 10,
     marginBottom: 30,
     fontSize: 20,

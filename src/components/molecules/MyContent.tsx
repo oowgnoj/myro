@@ -1,8 +1,8 @@
 import React from 'react';
 import {View, Image, StyleSheet, Text} from 'react-native';
-import OnOffCircle from '@components/atoms/OnOffCircle';
-import Thumbnail from '@components/atoms/Image';
-
+import OnOffCircle from '@atoms/OnOffCircle';
+import Thumbnail from '@atoms/Image';
+import globalstyle from '@constants/style';
 type Props = {habit: any};
 
 const SquarePictures: React.FC<Props> = ({habit}) => {
@@ -48,11 +48,11 @@ const styles = StyleSheet.create({
   TitleText: {
     fontSize: 21,
     fontWeight: 'bold',
-    color: '#fff',
+    color: globalstyle.MAIN_WHITE,
     marginBottom: 5,
   },
   TitleDesc: {
-    color: '#fff',
+    color: globalstyle.MAIN_WHITE,
     fontSize: 15,
     marginBottom: 5,
   },

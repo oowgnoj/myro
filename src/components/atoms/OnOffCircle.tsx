@@ -11,7 +11,7 @@ const OnOffCircle: React.FC<Props> = ({isOn}) => {
         width: 20,
         height: 20,
         borderRadius: 20 / 2,
-        backgroundColor: on ? globalstyle.MAIN_GREEN : '#fff',
+        backgroundColor: on ? globalstyle.MAIN_GREEN : globalstyle.MAIN_WHITE,
       }}
     />
   );

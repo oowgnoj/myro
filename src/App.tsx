@@ -1,19 +1,23 @@
 import 'react-native-gesture-handler';
-import React from 'react';
-import {StyleSheet} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import IndexScreen from './screens/Main';
-import LoginScreen from './screens/Login';
-import SignupScreen from './screens/Signup';
-import MyHabits from './screens/MyHabits';
-import Globalstyle from '@constants/style';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {
+  LoginScreen,
+  SignupScreen,
+  MypageScreen,
+  MyHabitScreen,
+  MainScreen,
+} from '@screens';
 
-const Stack = createStackNavigator();
+import useAuth from '@hooks/useAuth';
+import Globalstyle from '@constants/style';
+
 const Tab = createBottomTabNavigator();
 
 const App = () => {
+  const {token} = useAuth();
   return (
     <NavigationContainer>
       <Tab.Navigator
@@ -21,12 +25,16 @@ const App = () => {
           style: {
             backgroundColor: Globalstyle.MAIN_DARK,
           },
-          activeTintColor: '#fff',
-          inactiveTintColor: '#fff',
+          activeTintColor: Globalstyle.MAIN_WHITE,
+          inactiveTintColor: Globalstyle.MAIN_WHITE,
         }}>
-        <Tab.Screen name="Home" component={IndexScreen} />
-        <Tab.Screen name="MyHabit" component={MyHabits} />
-        <Tab.Screen name="Info" component={AuthStackScreen} />
+        <Tab.Screen name="Home" component={MainScreen} />
+        <Tab.Screen name="MyHabit" component={MyHabitScreen} />
+        <Tab.Screen
+          name="Info"
+          // component={token ? MypageScreen : AuthStackScreen}
+          component={token ? AuthStackScreen : MypageScreen}
+        />
       </Tab.Navigator>
     </NavigationContainer>
   );
@@ -34,7 +42,6 @@ const App = () => {
 export default App;
 
 const AuthStack = createStackNavigator();
-
 function AuthStackScreen() {
   return (
     <AuthStack.Navigator
@@ -42,7 +49,7 @@ function AuthStackScreen() {
         headerStyle: {
           backgroundColor: Globalstyle.MAIN_DARK,
         },
-        headerTintColor: '#fff',
+        headerTintColor: Globalstyle.MAIN_WHITE,
         headerTitleStyle: {
           fontWeight: 'bold',
         },
