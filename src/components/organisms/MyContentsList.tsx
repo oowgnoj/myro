@@ -1,13 +1,6 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  View,
-  FlatList,
-  StyleSheet,
-  Text,
-  StatusBar,
-} from 'react-native';
-import Content from '@molecules/ContentEntry';
+import {View, StyleSheet} from 'react-native';
+import MyContent from '@molecules/MyContent';
 
 type Props = {Contents: any};
 
@@ -20,11 +13,9 @@ const App: React.FC<Props> = ({Contents}) => {
             style={styles.entry}
             key={Math.random()} // 임시 key
           >
-            <Content
+            <MyContent
               key={Math.random()} // 임시 key
-              title={item.title}
-              image={item.image}
-              description={item.description}
+              habit={item}
             />
           </View>
         );
@@ -40,9 +31,9 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   entry: {
-    width: '45%',
-    height: 200,
-    paddingBottom: 10,
+    width: '100%',
+    height: 120,
+    marginBottom: 50,
   },
 });
 

@@ -1,5 +1,8 @@
 import React, {ReactHTMLElement} from 'react';
 import {SafeAreaView, StyleSheet, View} from 'react-native';
+import {NavigationContainer} from 'react-navigation';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+
 import globalStyle from '@constants/style';
 
 type Props = {children: React.ReactNode};

@@ -1,10 +1,12 @@
 import React from 'react';
+import {StyleSheet, ScrollView, View, Text} from 'react-native';
 import {
   NavigationParams,
   NavigationScreenProp,
   NavigationState,
+  NavigationContainer,
 } from 'react-navigation';
-import {StyleSheet, ScrollView, View, Text} from 'react-native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Layout from './Layout';
 import Banner from '@components/atoms/ImageWithText';
 import ContentsList from '@organisms/ContentsList';
@@ -34,7 +36,7 @@ const Index: React.FC<Props> = ({navigation}) => {
               image={MockBanner.image}
               titleText={MockBanner.title}
               description={MockBanner.description}
-              onClick={() => navigation.navigate('Layout')}
+              onClick={() => navigation.navigate('MyHabits')}
             />
           </View>
           <View style={styles.ContentsArea}>
