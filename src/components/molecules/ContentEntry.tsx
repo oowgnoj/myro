@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Image, StyleSheet, Text} from 'react-native';
-
+import globalstyle from '@constants/style';
 type Props = {image: string; title: string; description: string};
 
 const SquarePictures: React.FC<Props> = ({image, title, description}) => {
@@ -30,10 +30,10 @@ const styles = StyleSheet.create({
     fontSize: 21,
     fontWeight: 'bold',
     textAlign: 'center',
-    color: '#fff',
+    color: globalstyle.MAIN_WHITE,
   },
   TitleDesc: {
-    color: '#fff',
+    color: globalstyle.MAIN_WHITE,
     textAlign: 'center',
     fontSize: 15,
   },
