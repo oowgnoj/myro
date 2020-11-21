@@ -1,12 +1,18 @@
 import React from 'react';
-import {Image, TouchableOpacity, Text, StyleSheet} from 'react-native';
+import {
+  Image,
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+  ImageSourcePropType,
+} from 'react-native';
 
-type Props = {text: string; onClick?: () => void};
+type Props = {icon?: ImageSourcePropType; text: string; onClick?: () => void};
 
-const OvalButton: React.FC<Props> = ({text, onClick}) => {
+const OvalButton: React.FC<Props> = ({icon, text, onClick}) => {
   return (
     <TouchableOpacity style={styles.button} onPress={onClick}>
-      <Image style={styles.icon} source={require('../../assets/clock.png')} />
+      {icon ? <Image style={styles.icon} source={icon} /> : null}
       <Text style={styles.text}> {text} </Text>
     </TouchableOpacity>
   );
@@ -26,10 +32,10 @@ const styles = StyleSheet.create({
     height: 55,
   },
   text: {
-    marginLeft: 10,
     fontSize: 18,
   },
   icon: {
+    marginRight: 10,
     width: 18,
     height: 18,
   },

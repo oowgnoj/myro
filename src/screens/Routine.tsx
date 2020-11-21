@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import Layout from './Layout';
 import WeekEntry from '@components/molecules/WeekEntry';
-import {Week} from '../models/schedule';
+import {Week, Schedule} from '../models/schedule';
 import OvalButton from '@components/atoms/OvalButton';
 import TimePickerModal from 'react-native-modal-datetime-picker';
 
@@ -25,7 +25,7 @@ type Props = {
 const Routine: React.FC<Props> = ({navigation}) => {
   const [enroll, setEnroll] = useState(false);
   const [custom, setCustom] = useState(false);
-  const [schedule, setSchedule] = useState({
+  const [schedule, setSchedule] = useState<Schedule>({
     mon: true,
     tue: false,
     wed: false,
@@ -123,7 +123,11 @@ const Routine: React.FC<Props> = ({navigation}) => {
             </View>
           )}
           <View style={styles.buttonArea}>
-            <OvalButton text="습관 등록하기" onClick={onSubmit} />
+            <OvalButton
+              icon={require('../assets/clock.png')}
+              text="습관 등록하기"
+              onClick={onSubmit}
+            />
           </View>
         </ScrollView>
       </View>
