@@ -5,7 +5,7 @@ import {
   NavigationScreenProp,
   NavigationState,
 } from 'react-navigation';
-import Layout from './Layout';
+import Layout from '../components/Layout';
 import authContext from '../hooks/authContext';
 import globalstyle from '@constants/style';
 import {postLogin} from 'src/lib/api';

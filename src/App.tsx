@@ -9,8 +9,9 @@ import {
   LoginScreen,
   SignupScreen,
   MypageScreen,
-  MyHabitScreen,
+  MyRoutineScreen,
   MainScreen,
+  RoutineScreen,
 } from '@screens';
 
 import AuthContext from '@hooks/authContext';
@@ -19,16 +20,18 @@ import Globalstyle from '@constants/style';
 const Tab = createBottomTabNavigator();
 
 const App = () => {
-  const [token, setToken] = useState(
-    async () => await AsyncStorage.getItem('userToken'),
-  );
+  const [token, setToken] = useState(null);
+
+  useEffect(() => {
+    (async () => setToken(await AsyncStorage.getItem('userToken')))();
+  }, [token]);
+
   const saveToken = async (token) => {
     await AsyncStorage.setItem('userToken', token);
+    setToken(token);
   };
-  const authProviderValue = useMemo(() => ({token, saveToken}), [
-    token,
-    saveToken,
-  ]);
+  const authProviderValue = useMemo(() => ({token, saveToken}), [token]);
+
   return (
     <AuthContext.Provider value={authProviderValue}>
       <NavigationContainer>
@@ -40,12 +43,11 @@ const App = () => {
             activeTintColor: Globalstyle.MAIN_WHITE,
             inactiveTintColor: Globalstyle.MAIN_WHITE,
           }}>
-          <Tab.Screen name="Home" component={MainScreen} />
-          <Tab.Screen name="MyHabit" component={MyHabitScreen} />
+          <Tab.Screen name="Home" component={RoutineStackScreen} />
+          <Tab.Screen name="MyRoutine" component={MyRoutineScreen} />
           <Tab.Screen
             name="Info"
-            // component={token ? MypageScreen : AuthStackScreen}
-            component={token ? AuthStackScreen : MypageScreen}
+            component={token ? MypageScreen : AuthStackScreen}
           />
         </Tab.Navigator>
       </NavigationContainer>
@@ -53,6 +55,25 @@ const App = () => {
   );
 };
 export default App;
+
+const RoutineStack = createStackNavigator();
+function RoutineStackScreen() {
+  return (
+    <RoutineStack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: Globalstyle.MAIN_DARK,
+        },
+        headerTintColor: Globalstyle.MAIN_WHITE,
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+      }}>
+      <RoutineStack.Screen name="Home" component={MainScreen} />
+      <RoutineStack.Screen name="Routine" component={RoutineScreen} />
+    </RoutineStack.Navigator>
+  );
+}
 
 const AuthStack = createStackNavigator();
 function AuthStackScreen() {

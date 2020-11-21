@@ -18,7 +18,6 @@ const RoundButton: React.FC<Props> = ({text, isActive, handleStatus}) => {
       style={isActive ? styles.buttonActive : styles.buttonInactive}
       onPress={onClick}>
       <Text style={isActive ? styles.textActivate : styles.textInactiate}>
-        {' '}
         {text}{' '}
       </Text>
     </TouchableOpacity>
