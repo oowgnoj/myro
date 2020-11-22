@@ -1,27 +1,30 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {StyleSheet, Image, View, Text, TextInput, Button} from 'react-native';
 import {
   NavigationParams,
   NavigationScreenProp,
   NavigationState,
 } from 'react-navigation';
-import Layout from './Layout';
-import useAuth from '../hooks/useAuth';
+import Layout from '../components/Layout';
+import authContext from '../hooks/authContext';
 import globalstyle from '@constants/style';
+import {postLogin} from 'src/lib/api';
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 };
-const MyHabits: React.FC<Props> = ({navigation}) => {
+const Login: React.FC<Props> = ({navigation}) => {
+  const {token, saveToken} = useContext(authContext);
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const {saveToken} = useAuth();
-  const handleEmail = (email) => setEmail(email);
-  const handlePwd = (pwd) => setPassword(pwd);
-  const moveToSignup = () => navigation.navigate('Signup');
-  const signInAsync = async () => {
-    await saveToken('abc');
-    navigation.navigate('Main');
+  const handleSubmit = async () => {
+    try {
+      const {data} = await postLogin(email, password);
+      await saveToken(data.accessToken);
+      navigation.navigate('Home');
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <Layout>
@@ -37,22 +40,22 @@ const MyHabits: React.FC<Props> = ({navigation}) => {
           placeholder="Email or Username"
           placeholderTextColor={globalstyle.MAIN_WHITE}
           style={styles.textinput}
-          onChangeText={(email) => handleEmail(email)}
+          onChangeText={(email) => setEmail(email)}
         />
         <TextInput
           placeholder="password"
           secureTextEntry={true}
           style={styles.textinput}
-          onChangeText={(pwd) => handlePwd(pwd)}
+          onChangeText={(pwd) => setPassword(pwd)}
           placeholderTextColor={globalstyle.MAIN_WHITE}
         />
         <Button
-          onPress={signInAsync}
+          onPress={handleSubmit}
           title="continue"
           color={globalstyle.MAIN_GREEN}
         />
         <Button
-          onPress={moveToSignup}
+          onPress={() => navigation.navigate('Signup')}
           title="register"
           color={globalstyle.MAIN_GREEN}
         />
@@ -61,7 +64,7 @@ const MyHabits: React.FC<Props> = ({navigation}) => {
   );
 };
 
-export default MyHabits;
+export default Login;
 
 const styles = StyleSheet.create({
   root: {flex: 1, justifyContent: 'center'},

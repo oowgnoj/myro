@@ -1,11 +1,22 @@
 import React from 'react';
-import {View, Image, StyleSheet, Text} from 'react-native';
+import {View, Image, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import globalstyle from '@constants/style';
-type Props = {image: string; title: string; description: string};
+import {useNavigation} from '@react-navigation/native';
 
-const SquarePictures: React.FC<Props> = ({image, title, description}) => {
+type Props = {
+  id: number;
+  image: string;
+  title: string;
+  description: string;
+};
+
+const ContentEntry: React.FC<Props> = ({id, image, title, description}) => {
+  const navigation = useNavigation();
+
   return (
-    <View style={styles.wrapper}>
+    <TouchableOpacity
+      style={styles.wrapper}
+      onPress={() => navigation.navigate('Routine', {id})}>
       <Image
         style={styles.Image}
         source={{
@@ -14,10 +25,10 @@ const SquarePictures: React.FC<Props> = ({image, title, description}) => {
       />
       <Text style={styles.TitleText}>{title}</Text>
       <Text style={styles.TitleDesc}>{description}</Text>
-    </View>
+    </TouchableOpacity>
   );
 };
-export default SquarePictures;
+export default ContentEntry;
 
 const styles = StyleSheet.create({
   wrapper: {
