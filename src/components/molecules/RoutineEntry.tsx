@@ -3,31 +3,34 @@ import {View, Image, StyleSheet, Text} from 'react-native';
 import OnOffCircle from '@atoms/OnOffCircle';
 import Thumbnail from '@atoms/Image';
 import globalstyle from '@constants/style';
-type Props = {habit: any};
+import {IRoutine} from 'src/types';
+type Props = {routine: IRoutine};
 
-const SquarePictures: React.FC<Props> = ({habit}) => {
+const RoutineEntry: React.FC<Props> = ({routine}) => {
+  console.log('--------');
+  console.log(routine);
   return (
     <View style={styles.wrapper}>
       <View style={styles.text}>
-        <Text style={styles.TitleText}>{habit.content.title}</Text>
-        <Text style={styles.TitleText}>{habit.alarmTime}</Text>
+        <Text style={styles.TitleText}>{routine.contents.title}</Text>
+        <Text style={styles.TitleText}>{routine.alarmTime}</Text>
         <View style={styles.days}>
-          <OnOffCircle isOn={habit.mon} />
-          <OnOffCircle isOn={habit.tue} />
-          <OnOffCircle isOn={habit.wed} />
-          <OnOffCircle isOn={habit.thu} />
-          <OnOffCircle isOn={habit.fri} />
-          <OnOffCircle isOn={habit.sat} />
-          <OnOffCircle isOn={habit.sun} />
+          <OnOffCircle isOn={routine.mon} />
+          <OnOffCircle isOn={routine.tue} />
+          <OnOffCircle isOn={routine.wed} />
+          <OnOffCircle isOn={routine.thu} />
+          <OnOffCircle isOn={routine.fri} />
+          <OnOffCircle isOn={routine.sat} />
+          <OnOffCircle isOn={routine.sun} />
         </View>
       </View>
       <View style={styles.image}>
-        <Thumbnail url={habit.content.mainImage} />
+        <Thumbnail url={routine.contents.mainImage} />
       </View>
     </View>
   );
 };
-export default SquarePictures;
+export default RoutineEntry;
 
 const styles = StyleSheet.create({
   wrapper: {

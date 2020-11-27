@@ -12,8 +12,11 @@ import authContext from '@hooks/authContext';
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
+  message: string;
+  label: string;
+  onClick: () => void;
 };
-const Mypage: React.FC<Props> = ({navigation}) => {
+const Error: React.FC<Props> = ({navigation, message, onClick, label}) => {
   const {token, saveToken} = useContext(authContext);
   const requestLogout = async () => {
     try {
@@ -27,23 +30,21 @@ const Mypage: React.FC<Props> = ({navigation}) => {
   return (
     <Layout>
       <View style={styles.root}>
-        <View style={styles.header}>
-          <Text style={styles.titleText}>MYPAGE</Text>
-          <Image
-            style={{width: 130, height: 130}}
-            source={require('../assets/logo/pic.png')}
-          />
-          <Button onPress={requestLogout} title="로그이웃"></Button>
-        </View>
+        <Image
+          style={{width: 130, height: 130}}
+          source={require('../assets/logo/pic.png')}
+        />
+        <Text style={styles.titleText}>{message}</Text>
+        <Button onPress={onClick} title={label}></Button>
       </View>
     </Layout>
   );
 };
 
-export default Mypage;
+export default Error;
 
 const styles = StyleSheet.create({
-  root: {flex: 1, justifyContent: 'center'},
+  root: {flex: 1, justifyContent: 'center', flexDirection: 'column'},
   header: {
     flexDirection: 'row',
     justifyContent: 'center',

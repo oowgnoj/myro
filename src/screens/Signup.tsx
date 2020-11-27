@@ -13,8 +13,9 @@ import {
   NavigationScreenProp,
   NavigationState,
 } from 'react-navigation';
-import Layout from './Layout';
+import Layout from '../components/Layout';
 import globalstyle from '@constants/style';
+import {postSignup} from 'src/lib/api';
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
@@ -23,9 +24,14 @@ const Signup: React.FC<Props> = ({navigation}) => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [username, setUsername] = useState<string>('');
-  const handleEmail = (email) => setEmail(email);
-  const handlePwd = (pwd) => setPassword(pwd);
-
+  const handleSubmit = async () => {
+    try {
+      await postSignup(email, password, username);
+      navigation.navigate('Login');
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <Layout>
       <View style={styles.root}>
@@ -40,27 +46,26 @@ const Signup: React.FC<Props> = ({navigation}) => {
           placeholder="Email"
           placeholderTextColor={globalstyle.MAIN_WHITE}
           style={styles.textinput}
-          onChangeText={(email) => handleEmail(email)}
+          onChangeText={(email) => setEmail(email)}
         />
         <TextInput
           placeholder="password"
           secureTextEntry={true}
           style={styles.textinput}
-          onChangeText={(pwd) => handlePwd(pwd)}
+          onChangeText={(pwd) => setPassword(pwd)}
           placeholderTextColor={globalstyle.MAIN_WHITE}
         />
         <TextInput
           placeholder="username"
           secureTextEntry={true}
           style={styles.textinput}
-          onChangeText={(pwd) => handlePwd(pwd)}
+          onChangeText={(username) => setUsername(username)}
           placeholderTextColor={globalstyle.MAIN_WHITE}
         />
         <Button
-          onPress={() => console.log('hello')}
+          onPress={handleSubmit}
           title="continue"
-          color={globalstyle.MAIN_GREEN}
-          accessibilityLabel="Learn more about this purple button"></Button>
+          color={globalstyle.MAIN_GREEN}></Button>
       </View>
     </Layout>
   );

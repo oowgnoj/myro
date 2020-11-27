@@ -22,11 +22,12 @@ export interface IContent {
   ime: string;
 }
 export interface IRoutine {
-  content: IContent;
+  id: number;
+  contents: IContent;
   mon: boolean;
   tue: boolean;
   wed: boolean;
-  thr: boolean;
+  thu: boolean;
   fri: boolean;
   sat: boolean;
   sun: boolean;

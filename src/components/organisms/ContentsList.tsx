@@ -8,23 +8,21 @@ import {
   StatusBar,
 } from 'react-native';
 import Content from '@molecules/ContentEntry';
-
-type Props = {Contents: any};
+import {IContent} from 'src/types';
+type Props = {Contents: IContent[]};
 
 const App: React.FC<Props> = ({Contents}) => {
   return (
     <View style={styles.wrapper}>
       {Contents.map((item) => {
         return (
-          <View
-            style={styles.entry}
-            key={Math.random()} // 임시 key
-          >
+          <View style={styles.entry} key={item.id}>
             <Content
-              key={Math.random()} // 임시 key
+              key={item.id}
+              id={item.id}
               title={item.title}
-              image={item.image}
-              description={item.description}
+              image={item.mainImage}
+              description={item.subTitle}
             />
           </View>
         );
