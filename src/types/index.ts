@@ -23,7 +23,7 @@ export interface IContent {
 }
 export interface IRoutine {
   id: number;
-  content: IContent;
+  contents: IContent;
   mon: boolean;
   tue: boolean;
   wed: boolean;

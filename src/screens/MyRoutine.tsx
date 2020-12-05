@@ -24,6 +24,7 @@ const MyRoutine: React.FC<Props> = ({navigation}) => {
   useEffect(() => {
     (async () => {
       try {
+        console.log('들어옵니다');
         const {data} = await getRoutines(token);
         setRoutines(data);
         setHasError(false);

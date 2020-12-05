@@ -19,9 +19,13 @@ import {Week} from '../models/schedule';
 import OvalButton from '@components/atoms/OvalButton';
 import TimePickerModal from 'react-native-modal-datetime-picker';
 import {RouteProp} from '@react-navigation/native';
-import {getRoutine} from 'src/lib/api';
+import {getContent} from 'src/lib/api';
 import {IRoutine, IContent} from 'src/types';
+import {postRoutine} from 'src/lib/api';
 import _ from 'lodash';
+import {useContext} from 'react';
+import authContext from '@hooks/authContext';
+import {setRoutineNotification} from 'src/lib/notification';
 type RoutineScreenRouteProp = RouteProp<string, 'Routine'>;
 
 type Props = {
@@ -29,7 +33,7 @@ type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 };
 
-const Routine: React.FC<Props> = ({route}) => {
+const Routine: React.FC<Props> = ({route, navigation}) => {
   const [routine, setRoutine] = useState<IContent>();
   const [enroll, setEnroll] = useState(false);
   const [custom, setCustom] = useState(false);
@@ -45,11 +49,13 @@ const Routine: React.FC<Props> = ({route}) => {
     sun: false,
   });
 
+  const {token, saveToken} = useContext(authContext);
+
   useEffect(() => {
     (async () => {
       try {
         const {id} = route.params;
-        const {data} = await getRoutine(id);
+        const {data} = await getContent(id);
         setRoutine(data);
         setTime(data.recommendTime);
       } catch (err) {
@@ -81,9 +87,22 @@ const Routine: React.FC<Props> = ({route}) => {
     }
   };
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     if (enroll) {
-      // post
+      console.log(token);
+      console.log(time);
+      const res = await postRoutine(token, routine.id, schedule, time);
+      console.log(res);
+      if (res.status === 200) {
+        setRoutineNotification(
+          routine.id,
+          res.data.id,
+          routine.title,
+          schedule,
+          time,
+        );
+        navigation.navigate('MyRoutine');
+      }
     } else {
       setEnroll(true);
     }
@@ -99,7 +118,7 @@ const Routine: React.FC<Props> = ({route}) => {
     }
   };
   if (_.isEmpty(routine)) {
-    return <ActivityIndicator></ActivityIndicator>;
+    return <ActivityIndicator />;
   }
   return (
     <Layout>

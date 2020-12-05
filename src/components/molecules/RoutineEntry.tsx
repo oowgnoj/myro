@@ -7,10 +7,12 @@ import {IRoutine} from 'src/types';
 type Props = {routine: IRoutine};
 
 const RoutineEntry: React.FC<Props> = ({routine}) => {
+  console.log('--------');
+  console.log(routine);
   return (
     <View style={styles.wrapper}>
       <View style={styles.text}>
-        <Text style={styles.TitleText}>{routine.content.title}</Text>
+        <Text style={styles.TitleText}>{routine.contents.title}</Text>
         <Text style={styles.TitleText}>{routine.alarmTime}</Text>
         <View style={styles.days}>
           <OnOffCircle isOn={routine.mon} />
@@ -23,7 +25,7 @@ const RoutineEntry: React.FC<Props> = ({routine}) => {
         </View>
       </View>
       <View style={styles.image}>
-        <Thumbnail url={routine.content.mainImage} />
+        <Thumbnail url={routine.contents.mainImage} />
       </View>
     </View>
   );

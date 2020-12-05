@@ -29,6 +29,7 @@ const WeekEntry: React.FC<Props> = ({schedule, handleSchedule}) => {
         const status = schedule[Week[day]];
         return (
           <RoundButton
+            size="medium"
             text={day}
             isActive={status}
             handleStatus={handleStatus}

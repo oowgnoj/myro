@@ -1,58 +1,205 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {TouchableOpacity, Text, StyleSheet} from 'react-native';
 
+// 얘가 번역하자
 type Props = {
-  text: string;
+  size: string;
+  text?: string;
   isActive: boolean;
   handleStatus?: (text: string, active: boolean) => void;
 };
 
-const RoundButton: React.FC<Props> = ({text, isActive, handleStatus}) => {
-  // const [active, setActive] = useState(isActive);
+const RoundButton: React.FC<Props> = ({size, text, isActive, handleStatus}) => {
   const onClick = () => {
     handleStatus(text, !isActive);
   };
 
+  const getStyle = (type: string, size: string, isActive: boolean): string => {
+    const sizeStr = size.charAt(0).toUpperCase() + size.slice(1);
+    const isActiveStr = isActive ? 'Active' : 'Inactive';
+    console.log(type + sizeStr + isActiveStr);
+    return type + sizeStr + isActiveStr;
+  };
+
   return (
     <TouchableOpacity
-      style={isActive ? styles.buttonActive : styles.buttonInactive}
+      style={styles[getStyle('button', size, isActive)]}
       onPress={onClick}>
-      <Text style={isActive ? styles.textActivate : styles.textInactiate}>
-        {text}{' '}
-      </Text>
+      {text ? (
+        <Text style={styles[getStyle('text', size, isActive)]}> {text} </Text>
+      ) : null}
     </TouchableOpacity>
   );
 };
 export default RoundButton;
+
+const buttonSize = {
+  small: 11,
+  medium: 33,
+  large: 55,
+};
+
+const buttonColor = {
+  true: '#51845E',
+  false: '#ECE7E6',
+};
 
 const buttonBase = {
   alignItems: 'center',
   justifyContent: 'center',
   color: 'black',
   borderRadius: 100,
-  width: 33,
-  height: 33,
 };
 
-const textBase = {
-  fontSize: 15,
+const fontSize = {
+  small: 6,
+  medium: 15,
+  large: 20,
+};
+
+const fontColor = {
+  true: 'white',
+  false: 'black',
 };
 
 const styles = StyleSheet.create({
-  buttonInactive: {
+  buttonSmallInactive: {
     ...buttonBase,
-    backgroundColor: '#ECE7E6',
+    width: buttonSize.small,
+    height: buttonSize.small,
+    backgroundColor: buttonColor.false,
   },
-  buttonActive: {
+  buttonSmallActive: {
     ...buttonBase,
-    backgroundColor: '#51845E',
+    width: buttonSize.small,
+    height: buttonSize.small,
+    backgroundColor: buttonColor.true,
   },
-  textInactiate: {
-    ...textBase,
-    color: 'black',
+  buttonMediumInactive: {
+    ...buttonBase,
+    width: buttonSize.medium,
+    height: buttonSize.medium,
+    backgroundColor: buttonColor.false,
   },
-  textActivate: {
-    ...textBase,
-    color: 'white',
+  buttonMediumActive: {
+    ...buttonBase,
+    width: buttonSize.medium,
+    height: buttonSize.medium,
+    backgroundColor: buttonColor.true,
+  },
+  buttonLargeInactive: {
+    ...buttonBase,
+    width: buttonSize.large,
+    height: buttonSize.large,
+    backgroundColor: buttonColor.false,
+  },
+  buttonLargeActive: {
+    ...buttonBase,
+    width: buttonSize.large,
+    height: buttonSize.large,
+    backgroundColor: buttonColor.true,
+  },
+  textSmallInactive: {
+    fontSize: fontSize.small,
+    color: fontColor.false,
+  },
+  textSmallActive: {
+    fontSize: fontSize.small,
+    color: fontColor.true,
+  },
+  textMediumInactive: {
+    fontSize: fontSize.medium,
+    color: fontColor.false,
+  },
+  textMediumActive: {
+    fontSize: fontSize.medium,
+    color: fontColor.true,
+  },
+  textLargeInactive: {
+    fontSize: fontSize.large,
+    color: fontColor.false,
+  },
+  textLargeActive: {
+    fontSize: fontSize.large,
+    color: fontColor.true,
   },
 });
+
+// const styles = StyleSheet.create({
+//   button: {
+//     small: {
+//       true: {
+//         ...buttonBase,
+//         width: buttonSize.small,
+//         height: buttonSize.small,
+//         backgroundColor: buttonColor.true,
+//       },
+//       false: {
+//         ...buttonBase,
+//         width: buttonSize.small,
+//         height: buttonSize.small,
+//         backgroundColor: buttonColor.false,
+//       },
+//     },
+//     medium: {
+//       true: {
+//         ...buttonBase,
+//         width: buttonSize.medium,
+//         height: buttonSize.medium,
+//         backgroundColor: buttonColor.true,
+//       },
+//       false: {
+//         ...buttonBase,
+//         width: buttonSize.medium,
+//         height: buttonSize.medium,
+//         backgroundColor: buttonColor.false,
+//       },
+//     },
+//     large: {
+//       true: {
+//         ...buttonBase,
+//         width: buttonSize.large,
+//         height: buttonSize.large,
+//         backgroundColor: buttonColor.true,
+//       },
+//       false: {
+//         ...buttonBase,
+//         width: buttonSize.large,
+//         height: buttonSize.large,
+//         backgroundColor: buttonColor.false,
+//       },
+//     },
+//   },
+//   text: {
+//     small: {
+//       true: {
+//         fontSize: fontSize.small,
+//         color: fontColor.true,
+//       },
+//       false: {
+//         fontSize: fontSize.small,
+//         color: fontColor.false,
+//       },
+//     },
+//     medium: {
+//       true: {
+//         fontSize: fontSize.medium,
+//         color: fontColor.true,
+//       },
+//       false: {
+//         fontSize: fontSize.medium,
+//         color: fontColor.false,
+//       },
+//     },
+//     large: {
+//       true: {
+//         fontSize: fontSize.large,
+//         color: fontColor.true,
+//       },
+//       false: {
+//         fontSize: fontSize.large,
+//         color: fontColor.false,
+//       },
+//     },
+//   },
+// });
