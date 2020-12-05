@@ -38,10 +38,12 @@ PushNotification.configure({
     if (notification.action === 'YES') {
       const token = await AsyncStorage.getItem('userToken');
       await postSuccess(token, routineId, day);
+      // yes 는 main 으로 보내기
     }
 
     if (notification.action !== 'YES' && notification.action !== 'NO') {
       console.log('!');
+      // 했다 안했다로 보내기
     }
 
     // process the notification
