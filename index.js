@@ -2,7 +2,7 @@
  * @format
  */
 
-import {AppRegistry} from 'react-native';
+import {AppRegistry, Platform} from 'react-native';
 import App from './src/App';
 import {name as appName} from './app.json';
 import PushNotification from 'react-native-push-notification';
@@ -66,6 +66,7 @@ PushNotification.configure({
   },
 
   // IOS ONLY (optional): default: all - Permissions to register.
+
   permissions: {
     alert: true,
     badge: true,
@@ -83,6 +84,7 @@ PushNotification.configure({
    * - if you are not using remote notification or do not have Firebase installed, use this:
    *     requestPermissions: Platform.OS === 'ios'
    */
+
   requestPermissions: Platform.OS === 'ios',
 });
 
