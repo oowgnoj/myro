@@ -8,10 +8,10 @@ import {StyleSheet, ScrollView, View, Text, Image} from 'react-native';
 import Layout from '../components/Layout';
 import OvalButton from '@components/atoms/OvalButton';
 import RoundButton from '@components/atoms/RoundButton';
-import {getRoutine, postSuccess} from 'src/lib/api';
+import {getContent, postSuccess} from 'src/lib/api';
 import {useContext} from 'react';
 import authContext from '@hooks/authContext';
-import {Week} from 'models/schedule';
+import {Week} from '../models/schedule';
 import {useEffect} from 'react';
 import {IRoutine} from 'src/types';
 
@@ -19,7 +19,7 @@ type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 };
 
-const Success: React.FC<Props> = ({routineId, navigation}) => {
+const SuccessScreen: React.FC<Props> = ({routineId, contentId, navigation}) => {
   const [checked, setChecked] = useState<string>('');
   const [routine, setRoutine] = useState<IRoutine>();
   const {token, saveToken} = useContext(authContext);
@@ -27,7 +27,7 @@ const Success: React.FC<Props> = ({routineId, navigation}) => {
   useEffect(() => {
     (async () => {
       try {
-        const {data} = await getRoutine(routineId);
+        const {data} = await getContent(contentId);
         setRoutine(data);
       } catch (err) {
         console.log(err);
@@ -98,7 +98,7 @@ const Success: React.FC<Props> = ({routineId, navigation}) => {
   );
 };
 
-export default Success;
+export default SuccessScreen;
 
 const marginTop = 30;
 

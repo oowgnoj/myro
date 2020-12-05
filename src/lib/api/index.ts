@@ -32,7 +32,7 @@ export const getContents = async () => {
 };
 
 // ROUTINE
-export const getRoutine = async (id) => {
+export const getContent = async (id) => {
   return axios.get(`${DOMAIN_API}/content`, {params: {id}});
 };
 

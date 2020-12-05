@@ -19,12 +19,13 @@ import {Week} from '../models/schedule';
 import OvalButton from '@components/atoms/OvalButton';
 import TimePickerModal from 'react-native-modal-datetime-picker';
 import {RouteProp} from '@react-navigation/native';
-import {getRoutine} from 'src/lib/api';
+import {getContent} from 'src/lib/api';
 import {IRoutine, IContent} from 'src/types';
 import {postRoutine} from 'src/lib/api';
 import _ from 'lodash';
-import { useContext } from 'react';
+import {useContext} from 'react';
 import authContext from '@hooks/authContext';
+import {setRoutineNotification} from 'src/lib/notification';
 type RoutineScreenRouteProp = RouteProp<string, 'Routine'>;
 
 type Props = {
@@ -54,7 +55,7 @@ const Routine: React.FC<Props> = ({route, navigation}) => {
     (async () => {
       try {
         const {id} = route.params;
-        const {data} = await getRoutine(id);
+        const {data} = await getContent(id);
         setRoutine(data);
         setTime(data.recommendTime);
       } catch (err) {
@@ -89,9 +90,17 @@ const Routine: React.FC<Props> = ({route, navigation}) => {
   const onSubmit = async () => {
     if (enroll) {
       console.log(token);
+      console.log(time);
       const res = await postRoutine(token, routine.id, schedule, time);
       console.log(res);
       if (res.status === 200) {
+        setRoutineNotification(
+          routine.id,
+          res.data.id,
+          routine.title,
+          schedule,
+          time,
+        );
         navigation.navigate('MyRoutine');
       }
     } else {
@@ -109,7 +118,7 @@ const Routine: React.FC<Props> = ({route, navigation}) => {
     }
   };
   if (_.isEmpty(routine)) {
-    return <ActivityIndicator></ActivityIndicator>;
+    return <ActivityIndicator />;
   }
   return (
     <Layout>
