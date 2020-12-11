@@ -20,7 +20,7 @@ import OvalButton from '@components/atoms/OvalButton';
 import TimePickerModal from 'react-native-modal-datetime-picker';
 import {RouteProp} from '@react-navigation/native';
 import {getContent} from 'src/lib/api';
-import {IRoutine, IContent} from 'src/types';
+import {IContent} from 'src/types';
 import {postRoutine} from 'src/lib/api';
 import _ from 'lodash';
 import {useContext} from 'react';

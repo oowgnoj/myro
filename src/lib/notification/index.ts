@@ -29,7 +29,6 @@ const getTargetDates = (schedule: Schedule, time: string) => {
     });
     now = now.add(1, 'week');
   }
-  console.log(targetDates);
 
   return targetDates;
 };

@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React, {useEffect, useState, useMemo} from 'react';
+import React, {useEffect, useState, useMemo, useCallback} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -20,9 +20,11 @@ import Globalstyle from '@constants/style';
 const Tab = createBottomTabNavigator();
 
 const App = () => {
+  console.log('####### APP 재실행 ');
   const [token, setToken] = useState(null);
 
   useEffect(() => {
+    console.log('#########  APP 재실행', token);
     (async () => setToken(await AsyncStorage.getItem('userToken')))();
   }, [token]);
 

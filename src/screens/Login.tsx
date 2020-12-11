@@ -9,6 +9,7 @@ import Layout from '../components/Layout';
 import authContext from '../hooks/authContext';
 import globalstyle from '@constants/style';
 import {postLogin} from 'src/lib/api';
+import {OneButtonAlert} from 'src/lib/util';
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
@@ -17,13 +18,15 @@ const Login: React.FC<Props> = ({navigation}) => {
   const {token, saveToken} = useContext(authContext);
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+
   const handleSubmit = async () => {
     try {
       const {data} = await postLogin(email, password);
       await saveToken(data.accessToken);
+      console.log('############ login 성공', data.accessToken);
       navigation.navigate('Home');
     } catch (error) {
-      console.log(error);
+      OneButtonAlert('로그인', '회원 정보를 확인해주세요.', 'cancel');
     }
   };
   return (

@@ -14,6 +14,20 @@ const handleScheduleNotification = (title, message) => {
     alertTitle: title,
     alertBody: message,
     fireDate: date.toISOString(),
+    actions: [
+      {id: 'open', title: 'Open', options: {foreground: true}},
+      {
+        id: 'ignore',
+        title: 'Desruptive',
+        options: {foreground: true, destructive: true},
+      },
+      {
+        id: 'text',
+        title: 'Text Input',
+        options: {foreground: true},
+        textInput: {buttonTitle: 'Send'},
+      },
+    ],
   });
 };
 

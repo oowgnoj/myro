@@ -21,18 +21,23 @@ const MyRoutine: React.FC<Props> = ({navigation}) => {
   const [routines, setRoutines] = useState<IRoutine[]>([]);
   const [hasError, setHasError] = useState<Boolean>(false);
   const {token, saveToken} = useContext(authContext);
+  console.log('MY ROUTINE 실행 Access token =====>', token);
   useEffect(() => {
+    console.log('MY ROUTINE USE EFFECT 실행');
     (async () => {
       try {
-        console.log('들어옵니다');
+        console.log('###### my routine TOKEN ?', token);
         const {data} = await getRoutines(token);
+        console.log('###### ROUTINE 결과');
         setRoutines(data);
         setHasError(false);
-      } catch {
+      } catch (error) {
+        console.log('**************MY ROUTINE ERROR!!!*******', error);
+        setRoutines([]);
         setHasError(true);
       }
     })();
-  }, []);
+  }, [token]);
 
   if (routines.length === 0) {
     return (
