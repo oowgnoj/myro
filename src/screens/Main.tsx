@@ -52,7 +52,7 @@ const Index: React.FC<Props> = ({navigation}) => {
               titleText={contents[0].title}
               description={contents[0].subTitle}
               onClick={() =>
-                navigation.navigate('Routine', {id: contents[0].id, navigation})
+                navigation.navigate('Routine', {id: contents[0].id})
               }
             />
           </View>

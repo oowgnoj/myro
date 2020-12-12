@@ -25,7 +25,9 @@ import {postRoutine} from 'src/lib/api';
 import _ from 'lodash';
 import {useContext} from 'react';
 import authContext from '@hooks/authContext';
+import Globalstyle from '@constants/style';
 import {setRoutineNotification} from 'src/lib/notification';
+
 type RoutineScreenRouteProp = RouteProp<string, 'Routine'>;
 
 type Props = {
@@ -89,18 +91,16 @@ const Routine: React.FC<Props> = ({route, navigation}) => {
 
   const onSubmit = async () => {
     if (enroll) {
-      console.log(token);
-      console.log(time);
       const res = await postRoutine(token, routine.id, schedule, time);
-      console.log(res);
+      console.log(res.status);
       if (res.status === 200) {
-        setRoutineNotification(
-          routine.id,
-          res.data.id,
-          routine.title,
-          schedule,
-          time,
-        );
+        // setRoutineNotification(
+        //   routine.id,
+        //   res.data.id,
+        //   routine.title,
+        //   schedule,
+        //   time,
+        // );
         navigation.navigate('MyRoutine');
       }
     } else {
@@ -118,7 +118,11 @@ const Routine: React.FC<Props> = ({route, navigation}) => {
     }
   };
   if (_.isEmpty(routine)) {
-    return <ActivityIndicator />;
+    return (
+      <Layout>
+        <View style={styles.test}></View>
+      </Layout>
+    );
   }
   return (
     <Layout>
@@ -176,6 +180,10 @@ export default Routine;
 const marginTop = 30;
 
 const styles = StyleSheet.create({
+  test: {
+    height: '100%',
+    backgroundColor: Globalstyle.MAIN_DARK,
+  },
   root: {
     flex: 1,
     flexDirection: 'column',

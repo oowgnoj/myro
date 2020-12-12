@@ -19,26 +19,33 @@ type Props = {
 
 const MyRoutine: React.FC<Props> = ({navigation}) => {
   const [routines, setRoutines] = useState<IRoutine[]>([]);
+  const [loading, setLoading] = useState<Boolean>(true);
   const [hasError, setHasError] = useState<Boolean>(false);
-  const {token, saveToken} = useContext(authContext);
+  const {token} = useContext(authContext);
   console.log('MY ROUTINE 실행 Access token =====>', token);
   useEffect(() => {
-    console.log('MY ROUTINE USE EFFECT 실행');
+    setLoading(true);
     (async () => {
       try {
-        console.log('###### my routine TOKEN ?', token);
         const {data} = await getRoutines(token);
-        console.log('###### ROUTINE 결과');
         setRoutines(data);
+        setLoading(false);
         setHasError(false);
       } catch (error) {
-        console.log('**************MY ROUTINE ERROR!!!*******', error);
         setRoutines([]);
+        setLoading(false);
         setHasError(true);
       }
     })();
   }, [token]);
 
+  if (loading) {
+    return (
+      <Layout>
+        <View style={styles.root}></View>
+      </Layout>
+    );
+  }
   if (routines.length === 0) {
     return (
       <ErrorScreen
@@ -69,6 +76,7 @@ export default MyRoutine;
 
 const styles = StyleSheet.create({
   root: {flex: 1},
+
   textArea: {
     marginBottom: 30,
   },

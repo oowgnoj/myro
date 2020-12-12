@@ -16,6 +16,7 @@ import {
 import Layout from '../components/Layout';
 import globalstyle from '@constants/style';
 import {postSignup} from 'src/lib/api';
+import {OneButtonAlert} from 'src/lib/util';
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
@@ -28,8 +29,13 @@ const Signup: React.FC<Props> = ({navigation}) => {
     try {
       await postSignup(email, password, username);
       navigation.navigate('Login');
+      OneButtonAlert('로그인', '로그인 해주세요', 'OK');
     } catch (error) {
-      console.log(error);
+      OneButtonAlert(
+        '회원가입',
+        '입력해주신 정보를 다시 확인해주세요',
+        '뒤로가기',
+      );
     }
   };
   return (

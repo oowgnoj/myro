@@ -16,6 +16,7 @@ import {
 
 import AuthContext from '@hooks/authContext';
 import Globalstyle from '@constants/style';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const Tab = createBottomTabNavigator();
 
@@ -45,11 +46,32 @@ const App = () => {
             activeTintColor: Globalstyle.MAIN_WHITE,
             inactiveTintColor: Globalstyle.MAIN_WHITE,
           }}>
-          <Tab.Screen name="Home" component={RoutineStackScreen} />
-          <Tab.Screen name="MyRoutine" component={MyRoutineScreen} />
+          <Tab.Screen
+            name="Home"
+            component={RoutineStackScreen}
+            options={{
+              tabBarIcon: ({color, size}) => (
+                <Icon name="home" size={20} color="#fff" />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="MyRoutine"
+            component={MyRoutineScreen}
+            options={{
+              tabBarIcon: ({color, size}) => (
+                <Icon name="list-alt" size={20} color="#fff" />
+              ),
+            }}
+          />
           <Tab.Screen
             name="Info"
             component={token ? MypageScreen : AuthStackScreen}
+            options={{
+              tabBarIcon: ({color, size}) => (
+                <Icon name="user" size={20} color="#fff" />
+              ),
+            }}
           />
         </Tab.Navigator>
       </NavigationContainer>
