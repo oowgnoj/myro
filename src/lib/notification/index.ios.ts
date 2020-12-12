@@ -15,12 +15,12 @@ const setNotificationCategories = () => {
       id: 'success',
       actions: [
         {
-          id: 'did',
+          id: 'YES',
           title: '했다',
           options: {foreground: true},
         },
         {
-          id: 'not',
+          id: 'NO',
           title: '안했다',
           options: {foreground: true},
         },
@@ -37,22 +37,21 @@ const enrollRoutineNotification = (
   time: string,
 ) => {
   const targetDates = getTargetDates(schedule, time);
-  console.log('### schedule', schedule);
-  console.log('#### time', time);
-  console.log('###### target date', targetDates);
+  // console.log('### schedule', schedule);
+  // console.log('#### time', time);
+  // console.log('###### target date', targetDates);
   PushNotificationIOS.removeAllPendingNotificationRequests();
 
   targetDates.forEach((date: Date) => {
+    const day = date.toISOString();
     PushNotificationIOS.scheduleLocalNotification({
       fireDate: date.toISOString(),
       alertTitle: title,
+      userInfo: {contentId, routineId, day},
       alertBody: date.toISOString(),
       category: 'success',
     });
   });
-  PushNotificationIOS.getScheduledLocalNotifications((a) =>
-    console.log('알림 등록', a),
-  );
 };
 
 export {showNotification, enrollRoutineNotification, setNotificationCategories};

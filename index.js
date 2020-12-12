@@ -32,17 +32,31 @@ PushNotification.configure({
   // (required) Called when a remote is received or opened, or local notification is opened
   onNotification: async function (notification) {
     console.log('NOTIFICATION:', notification);
+
     const {routineId, contentId, day} = notification.data;
 
-    if (notification.action === 'YES') {
-      const token = await AsyncStorage.getItem('userToken');
-      await postSuccess(token, routineId, day);
-      // yes 는 main 으로 보내기
+    // 안드로이드와 같은 방식으로 동작
+    if (Platform.OS === 'ios') {
+      if (notification.data.actionIdentifier === 'YES') {
+        const token = await AsyncStorage.getItem('userToken');
+        await postSuccess(token, routineId, day);
+      }
+      if (notification.data.actionIdentifier === 'NO') {
+        console.log('no');
+      }
     }
 
-    if (notification.action !== 'YES' && notification.action !== 'NO') {
-      console.log('!');
-      // 했다 안했다로 보내기
+    if (Platform.OS === 'android') {
+      if (notification.action === 'YES') {
+        const token = await AsyncStorage.getItem('userToken');
+        await postSuccess(token, routineId, day);
+        // yes 는 main 으로 보내기
+      }
+
+      if (notification.action !== 'YES' && notification.action !== 'NO') {
+        console.log('!');
+        // 했다 안했다로 보내기
+      }
     }
 
     // process the notification
