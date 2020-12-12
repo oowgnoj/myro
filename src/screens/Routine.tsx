@@ -98,6 +98,7 @@ const Routine: React.FC<Props> = ({route, navigation}) => {
           routine.id,
           res.data.id,
           routine.title,
+          routine.mainImage,
           schedule,
           time,
         );

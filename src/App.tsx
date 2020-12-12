@@ -16,6 +16,8 @@ import {
 
 import AuthContext from '@hooks/authContext';
 import Globalstyle from '@constants/style';
+import {navigationRef} from './RootNavigation';
+import SuccessScreen from '@screens/Success';
 
 const Tab = createBottomTabNavigator();
 
@@ -23,7 +25,9 @@ const App = () => {
   const [token, setToken] = useState(null);
 
   useEffect(() => {
-    (async () => setToken(await AsyncStorage.getItem('userToken')))();
+    (async () => {
+      setToken(await AsyncStorage.getItem('userToken'));
+    })();
   }, [token]);
 
   const saveToken = async (token) => {
@@ -34,7 +38,7 @@ const App = () => {
 
   return (
     <AuthContext.Provider value={authProviderValue}>
-      <NavigationContainer>
+      <NavigationContainer ref={navigationRef}>
         <Tab.Navigator
           tabBarOptions={{
             style: {
@@ -71,6 +75,7 @@ function RoutineStackScreen() {
       }}>
       <RoutineStack.Screen name="Home" component={MainScreen} />
       <RoutineStack.Screen name="Routine" component={RoutineScreen} />
+      <RoutineStack.Screen name="Success" component={SuccessScreen} />
     </RoutineStack.Navigator>
   );
 }

@@ -16,10 +16,18 @@ import {useEffect} from 'react';
 import {IRoutine} from 'src/types';
 
 type Props = {
+  route: {
+    params: {routineId: number; contentId: number; title: string; url: string};
+  };
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 };
 
-const SuccessScreen: React.FC<Props> = ({routineId, contentId, navigation}) => {
+const SuccessScreen: React.FC<Props> = ({
+  route: {
+    params: {routineId, contentId, title, url},
+  },
+  navigation,
+}) => {
   const [checked, setChecked] = useState<string>('');
   const [routine, setRoutine] = useState<IRoutine>();
   const {token, saveToken} = useContext(authContext);
@@ -27,6 +35,7 @@ const SuccessScreen: React.FC<Props> = ({routineId, contentId, navigation}) => {
   useEffect(() => {
     (async () => {
       try {
+        // 서버 요청 받는 부분 구현은 해두었으나 실제로는 알림과 함께 저장된 정보로 랜더링
         const {data} = await getContent(contentId);
         setRoutine(data);
       } catch (err) {
@@ -65,13 +74,13 @@ const SuccessScreen: React.FC<Props> = ({routineId, contentId, navigation}) => {
       <View style={styles.root}>
         <ScrollView>
           <View style={styles.titleArea}>
-            <Text style={styles.titleText}>{routine.contents.title}</Text>
+            <Text style={styles.titleText}>{title}</Text>
           </View>
           <View style={styles.imageArea}>
             <Image
               style={styles.image}
               source={{
-                uri: routine.contents.mainImage,
+                uri: url,
               }}
             />
           </View>
