@@ -26,7 +26,11 @@ import _ from 'lodash';
 import {useContext} from 'react';
 import authContext from '@hooks/authContext';
 import Globalstyle from '@constants/style';
-import {setRoutineNotification} from 'src/lib/notification';
+import {
+  enrollRoutineNotification,
+  setNotificationCategories,
+} from '../lib/notification';
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
 
 type RoutineScreenRouteProp = RouteProp<string, 'Routine'>;
 
@@ -64,6 +68,7 @@ const Routine: React.FC<Props> = ({route, navigation}) => {
         console.log(err);
       }
     })();
+    setNotificationCategories();
   }, []);
 
   const showPicker = () => {
@@ -91,15 +96,23 @@ const Routine: React.FC<Props> = ({route, navigation}) => {
 
   const onSubmit = async () => {
     if (enroll) {
+      console.log(schedule, time);
       const res = await postRoutine(token, routine.id, schedule, time);
-      console.log(res.status);
+      console.log(res);
       if (res.status === 200) {
-        // setRoutineNotification(
-        //   routine.id,
-        //   res.data.id,
-        //   routine.title,
-        //   schedule,
-        //   time,
+        enrollRoutineNotification(
+          routine.id,
+          res.data.id,
+          routine.title,
+          schedule,
+          time,
+        );
+        // handleScheduleNotification(
+        // routine.id,
+        // res.data.id,
+        // routine.title,
+        // schedule,
+        // time,
         // );
         navigation.navigate('MyRoutine');
       }
