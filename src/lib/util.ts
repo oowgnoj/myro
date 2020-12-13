@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
-import 'dayjs/locale/ko'; // load on demand
-dayjs.locale('ko'); // use Spanish locale globally
+
+export const days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
 
 import {Schedule} from 'models/schedule';
 import {Alert} from 'react-native';
@@ -17,7 +17,7 @@ export const OneButtonAlert = (
     [
       {
         text: buttonText,
-        onPress: () => console.log('No Pressed'),
+        onPress: () => onClick,
         style: 'cancel',
       },
     ],
@@ -26,8 +26,6 @@ export const OneButtonAlert = (
 };
 
 export const getTargetDates = (schedule: Schedule, time: string) => {
-  const days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
-
   const activeDays = [];
   for (const day in schedule) {
     if (schedule[day]) {

@@ -1,7 +1,6 @@
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
-import dayjs from 'dayjs';
 import {Schedule} from 'models/schedule';
-import {getTargetDates} from 'src/lib/util';
+import {getTargetDates, days} from 'src/lib/util';
 
 const showNotification = (title, message) => {
   PushNotificationIOS.presentLocalNotification({
@@ -29,29 +28,30 @@ const setNotificationCategories = () => {
   ]);
 };
 
-const enrollRoutineNotification = (
+const setRoutineNotification = (
   contentId: number,
   routineId: number,
   title: string,
+  url: string,
   schedule: Schedule,
   time: string,
 ) => {
+  console.log('#### schedule', schedule);
+  console.log('#### time', time);
   const targetDates = getTargetDates(schedule, time);
-  // console.log('### schedule', schedule);
-  // console.log('#### time', time);
-  // console.log('###### target date', targetDates);
+  console.log('#### target date', targetDates);
   PushNotificationIOS.removeAllPendingNotificationRequests();
 
   targetDates.forEach((date: Date) => {
-    const day = date.toISOString();
+    const day = days[date.getDay()];
     PushNotificationIOS.scheduleLocalNotification({
       fireDate: date.toISOString(),
       alertTitle: title,
-      userInfo: {contentId, routineId, day},
+      userInfo: {contentId, routineId, day, title, url},
       alertBody: date.toISOString(),
       category: 'success',
     });
   });
 };
 
-export {showNotification, enrollRoutineNotification, setNotificationCategories};
+export {showNotification, setRoutineNotification, setNotificationCategories};

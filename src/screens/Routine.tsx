@@ -27,10 +27,11 @@ import {useContext} from 'react';
 import authContext from '@hooks/authContext';
 import Globalstyle from '@constants/style';
 import {
-  enrollRoutineNotification,
+  setRoutineNotification,
   setNotificationCategories,
 } from '../lib/notification';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
+import {Platform} from 'react-native';
 
 type RoutineScreenRouteProp = RouteProp<string, 'Routine'>;
 
@@ -68,7 +69,8 @@ const Routine: React.FC<Props> = ({route, navigation}) => {
         console.log(err);
       }
     })();
-    setNotificationCategories();
+    // IOS notification category 설정
+    Platform.OS === 'ios' && setNotificationCategories();
   }, []);
 
   const showPicker = () => {
@@ -96,26 +98,21 @@ const Routine: React.FC<Props> = ({route, navigation}) => {
 
   const onSubmit = async () => {
     if (enroll) {
-      console.log(schedule, time);
-      const res = await postRoutine(token, routine.id, schedule, time);
-      console.log(res);
-      if (res.status === 200) {
-        enrollRoutineNotification(
-          routine.id,
-          res.data.id,
-          routine.title,
-          routine.mainImage,
-          schedule,
-          time,
-        );
-        // handleScheduleNotification(
-        // routine.id,
-        // res.data.id,
-        // routine.title,
-        // schedule,
-        // time,
-        // );
-        navigation.navigate('MyRoutine');
+      try {
+        const res = await postRoutine(token, routine.id, schedule, time);
+        if (res.status === 200) {
+          setRoutineNotification(
+            routine.id,
+            res.data.id,
+            routine.title,
+            routine.mainImage,
+            schedule,
+            time,
+          );
+          navigation.navigate('MyRoutine');
+        }
+      } catch (error) {
+        console.log(error);
       }
     } else {
       setEnroll(true);

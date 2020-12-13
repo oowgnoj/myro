@@ -26,52 +26,37 @@ PushNotification.createChannel(
 
 PushNotification.configure({
   // (optional) Called when Token is generated (iOS and Android)
-  onRegister: function (token) {
-    console.log('TOKEN:', token);
-  },
+  onRegister: function (token) {},
 
   // (required) Called when a remote is received or opened, or local notification is opened
   onNotification: async function (notification) {
-    console.log('NOTIFICATION:', notification);
-<<<<<<< HEAD
-
-    const {routineId, contentId, day} = notification.data;
-
-    // 안드로이드와 같은 방식으로 동작
-    if (Platform.OS === 'ios') {
-      if (notification.data.actionIdentifier === 'YES') {
-        const token = await AsyncStorage.getItem('userToken');
-        await postSuccess(token, routineId, day);
-      }
-      if (notification.data.actionIdentifier === 'NO') {
-        console.log('no');
-      }
-    }
-
-    if (Platform.OS === 'android') {
-      if (notification.action === 'YES') {
-        const token = await AsyncStorage.getItem('userToken');
-        await postSuccess(token, routineId, day);
-        // yes 는 main 으로 보내기
-      }
-
-      if (notification.action !== 'YES' && notification.action !== 'NO') {
-        console.log('!');
-        // 했다 안했다로 보내기
-      }
-=======
+    const notificationAction =
+      Platform.OS === 'android'
+        ? notification.action
+        : notification.data.actionIdentifier;
+    console.log('notification', notification);
     const {routineId, contentId, day, title, url} = notification.data;
 
-    if (notification.action === 'YES') {
-      const token = await AsyncStorage.getItem('userToken');
-      await postSuccess(token, routineId, day);
-    }
+    if (notificationAction === 'YES') {
+      try {
+        const token = await AsyncStorage.getItem('userToken');
+        console.log('token ====>', token);
+        console.log('rid ====>', routineId);
+        console.log('cid ====>', contentId);
+        console.log('day ====>', day);
+        console.log('title ====>', title);
+        console.log('url ====>', url);
 
-    if (notification.action !== 'YES' && notification.action !== 'NO') {
+        const res = await postSuccess(token, routineId, day);
+        console.log('response ', res);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    if (notificationAction !== 'YES' && notificationAction !== 'NO') {
       RootNavigation.navigate('Success', {
         data: {routineId, contentId, title, url},
       });
->>>>>>> 6996db2a5505cc2e06ab3b0e21c7623231eaeeb5
     }
 
     // process the notification
