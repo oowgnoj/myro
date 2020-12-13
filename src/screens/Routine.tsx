@@ -20,12 +20,19 @@ import OvalButton from '@components/atoms/OvalButton';
 import TimePickerModal from 'react-native-modal-datetime-picker';
 import {RouteProp} from '@react-navigation/native';
 import {getContent} from 'src/lib/api';
-import {IRoutine, IContent} from 'src/types';
+import {IContent} from 'src/types';
 import {postRoutine} from 'src/lib/api';
 import _ from 'lodash';
 import {useContext} from 'react';
 import authContext from '@hooks/authContext';
-import {setRoutineNotification} from 'src/lib/notification';
+import Globalstyle from '@constants/style';
+import {
+  setRoutineNotification,
+  setNotificationCategories,
+} from '../lib/notification';
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
+import {Platform} from 'react-native';
+
 type RoutineScreenRouteProp = RouteProp<string, 'Routine'>;
 
 type Props = {
@@ -62,6 +69,8 @@ const Routine: React.FC<Props> = ({route, navigation}) => {
         console.log(err);
       }
     })();
+    // IOS notification category 설정
+    Platform.OS === 'ios' && setNotificationCategories();
   }, []);
 
   const showPicker = () => {
@@ -89,19 +98,21 @@ const Routine: React.FC<Props> = ({route, navigation}) => {
 
   const onSubmit = async () => {
     if (enroll) {
-      console.log(token);
-      console.log(time);
-      const res = await postRoutine(token, routine.id, schedule, time);
-      console.log(res);
-      if (res.status === 200) {
-        setRoutineNotification(
-          routine.id,
-          res.data.id,
-          routine.title,
-          schedule,
-          time,
-        );
-        navigation.navigate('MyRoutine');
+      try {
+        const res = await postRoutine(token, routine.id, schedule, time);
+        if (res.status === 200) {
+          setRoutineNotification(
+            routine.id,
+            res.data.id,
+            routine.title,
+            routine.mainImage,
+            schedule,
+            time,
+          );
+          navigation.navigate('MyRoutine');
+        }
+      } catch (error) {
+        console.log(error);
       }
     } else {
       setEnroll(true);
@@ -118,7 +129,11 @@ const Routine: React.FC<Props> = ({route, navigation}) => {
     }
   };
   if (_.isEmpty(routine)) {
-    return <ActivityIndicator />;
+    return (
+      <Layout>
+        <View style={styles.test}></View>
+      </Layout>
+    );
   }
   return (
     <Layout>
@@ -176,6 +191,10 @@ export default Routine;
 const marginTop = 30;
 
 const styles = StyleSheet.create({
+  test: {
+    height: '100%',
+    backgroundColor: Globalstyle.MAIN_DARK,
+  },
   root: {
     flex: 1,
     flexDirection: 'column',

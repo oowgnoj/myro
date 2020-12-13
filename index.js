@@ -8,6 +8,7 @@ import {name as appName} from './app.json';
 import PushNotification from 'react-native-push-notification';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {postSuccess} from 'src/lib/api';
+import * as RootNavigation from 'src/RootNavigation';
 
 export const channelId = 'channel-myro';
 
@@ -25,24 +26,37 @@ PushNotification.createChannel(
 
 PushNotification.configure({
   // (optional) Called when Token is generated (iOS and Android)
-  onRegister: function (token) {
-    console.log('TOKEN:', token);
-  },
+  onRegister: function (token) {},
 
   // (required) Called when a remote is received or opened, or local notification is opened
   onNotification: async function (notification) {
-    console.log('NOTIFICATION:', notification);
-    const {routineId, contentId, day} = notification.data;
+    const notificationAction =
+      Platform.OS === 'android'
+        ? notification.action
+        : notification.data.actionIdentifier;
+    console.log('notification', notification);
+    const {routineId, contentId, day, title, url} = notification.data;
 
-    if (notification.action === 'YES') {
-      const token = await AsyncStorage.getItem('userToken');
-      await postSuccess(token, routineId, day);
-      // yes 는 main 으로 보내기
+    if (notificationAction === 'YES') {
+      try {
+        const token = await AsyncStorage.getItem('userToken');
+        console.log('token ====>', token);
+        console.log('rid ====>', routineId);
+        console.log('cid ====>', contentId);
+        console.log('day ====>', day);
+        console.log('title ====>', title);
+        console.log('url ====>', url);
+
+        const res = await postSuccess(token, routineId, day);
+        console.log('response ', res);
+      } catch (error) {
+        console.log(error);
+      }
     }
-
-    if (notification.action !== 'YES' && notification.action !== 'NO') {
-      console.log('!');
-      // 했다 안했다로 보내기
+    if (notificationAction !== 'YES' && notificationAction !== 'NO') {
+      RootNavigation.navigate('Success', {
+        data: {routineId, contentId, title, url},
+      });
     }
 
     // process the notification

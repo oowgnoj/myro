@@ -17,16 +17,6 @@ type Props = {
   onClick: () => void;
 };
 const Error: React.FC<Props> = ({navigation, message, onClick, label}) => {
-  const {token, saveToken} = useContext(authContext);
-  const requestLogout = async () => {
-    try {
-      await saveToken('');
-      navigation.navigate('Home');
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   return (
     <Layout>
       <View style={styles.root}>

@@ -2,11 +2,13 @@ import dayjs from 'dayjs';
 import {Schedule} from 'models/schedule';
 import PushNotification from 'react-native-push-notification';
 import {channelId} from '../../../index';
+import {Image} from 'react-native';
 
 // 도메인 일주일과 JS 네이티브 Date 객체 일주일을 매핑하기 위한 배열
 const days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
 
 const getTargetDates = (schedule: Schedule, time: string) => {
+  console.log('get target dates', schedule);
   const activeDays = [];
   for (const day in schedule) {
     if (schedule[day]) {
@@ -29,7 +31,6 @@ const getTargetDates = (schedule: Schedule, time: string) => {
     });
     now = now.add(1, 'week');
   }
-  console.log(targetDates);
 
   return targetDates;
 };
@@ -38,6 +39,7 @@ export const setRoutineNotification = (
   contentId: number,
   routineId: number,
   title: string,
+  url: string,
   schedule: Schedule,
   time: string,
 ) => {
@@ -49,7 +51,7 @@ export const setRoutineNotification = (
       channelId,
       title,
       date,
-      userInfo: {contentId, routineId, day},
+      userInfo: {contentId, routineId, day, title, url},
       actions: ['YES', 'NO'],
       message: '실천해볼까요?',
     });

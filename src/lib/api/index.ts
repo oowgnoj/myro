@@ -49,7 +49,6 @@ export const postRoutine = async (
   alarmTime: string,
 ) => {
   const {mon, tue, wed, thu, fri, sat, sun} = schedule;
-  console.log({token, contents, mon, tue, wed, thu, fri, sat, sun, alarmTime});
   return await axios.post(
     `${DOMAIN_API}/routine`,
     JSON.stringify({
@@ -77,7 +76,6 @@ export const postSuccess = async (
   routineId: number,
   day: string,
 ) => {
-  console.log({token, routineId, day});
   return await axios.post(
     `${DOMAIN_API}/success`,
     JSON.stringify({

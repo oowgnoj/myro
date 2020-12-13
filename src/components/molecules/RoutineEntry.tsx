@@ -7,8 +7,6 @@ import {IRoutine} from 'src/types';
 type Props = {routine: IRoutine};
 
 const RoutineEntry: React.FC<Props> = ({routine}) => {
-  console.log('--------');
-  console.log(routine);
   return (
     <View style={styles.wrapper}>
       <View style={styles.text}>

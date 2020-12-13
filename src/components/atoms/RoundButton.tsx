@@ -17,7 +17,6 @@ const RoundButton: React.FC<Props> = ({size, text, isActive, handleStatus}) => {
   const getStyle = (type: string, size: string, isActive: boolean): string => {
     const sizeStr = size.charAt(0).toUpperCase() + size.slice(1);
     const isActiveStr = isActive ? 'Active' : 'Inactive';
-    console.log(type + sizeStr + isActiveStr);
     return type + sizeStr + isActiveStr;
   };
 
