@@ -17,6 +17,8 @@ import {
 import AuthContext from '@hooks/authContext';
 import Globalstyle from '@constants/style';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {navigationRef} from './RootNavigation';
+import SuccessScreen from '@screens/Success';
 
 const Tab = createBottomTabNavigator();
 
@@ -37,7 +39,7 @@ const App = () => {
 
   return (
     <AuthContext.Provider value={authProviderValue}>
-      <NavigationContainer>
+      <NavigationContainer ref={navigationRef}>
         <Tab.Navigator
           tabBarOptions={{
             style: {
@@ -95,6 +97,7 @@ function RoutineStackScreen() {
       }}>
       <RoutineStack.Screen name="Home" component={MainScreen} />
       <RoutineStack.Screen name="Routine" component={RoutineScreen} />
+      <RoutineStack.Screen name="Success" component={SuccessScreen} />
     </RoutineStack.Navigator>
   );
 }

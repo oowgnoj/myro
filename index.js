@@ -8,6 +8,7 @@ import {name as appName} from './app.json';
 import PushNotification from 'react-native-push-notification';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {postSuccess} from 'src/lib/api';
+import * as RootNavigation from 'src/RootNavigation';
 
 export const channelId = 'channel-myro';
 
@@ -32,6 +33,7 @@ PushNotification.configure({
   // (required) Called when a remote is received or opened, or local notification is opened
   onNotification: async function (notification) {
     console.log('NOTIFICATION:', notification);
+<<<<<<< HEAD
 
     const {routineId, contentId, day} = notification.data;
 
@@ -57,6 +59,19 @@ PushNotification.configure({
         console.log('!');
         // 했다 안했다로 보내기
       }
+=======
+    const {routineId, contentId, day, title, url} = notification.data;
+
+    if (notification.action === 'YES') {
+      const token = await AsyncStorage.getItem('userToken');
+      await postSuccess(token, routineId, day);
+    }
+
+    if (notification.action !== 'YES' && notification.action !== 'NO') {
+      RootNavigation.navigate('Success', {
+        data: {routineId, contentId, title, url},
+      });
+>>>>>>> 6996db2a5505cc2e06ab3b0e21c7623231eaeeb5
     }
 
     // process the notification
