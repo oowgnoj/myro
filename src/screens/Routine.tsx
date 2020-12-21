@@ -30,7 +30,6 @@ import {
   setRoutineNotification,
   setNotificationCategories,
 } from '../lib/notification';
-import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import {Platform} from 'react-native';
 
 type RoutineScreenRouteProp = RouteProp<string, 'Routine'>;

@@ -19,6 +19,7 @@ import Globalstyle from '@constants/style';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {navigationRef} from './RootNavigation';
 import SuccessScreen from '@screens/Success';
+import authContext from 'src/hooks/authContext';
 
 const Tab = createBottomTabNavigator();
 

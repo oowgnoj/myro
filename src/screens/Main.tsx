@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import {
   StyleSheet,
   ScrollView,
@@ -14,27 +14,32 @@ import {
 import Layout from '@components/Layout';
 import Banner from '@atoms/ImageWithText';
 import ContentsList from '@organisms/ContentsList';
-import {getContents} from 'src/lib/api';
-import {IContent} from 'src/types';
+import authContext from '@hooks/authContext';
+
+import {getContents, getRoutines} from 'src/lib/api';
+import {IContent, IRoutine} from 'src/types';
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 };
 const Index: React.FC<Props> = ({navigation}) => {
   const [contents, setContents] = useState<IContent[]>([]);
+  const [rouitnes, setRoutines] = useState<IRoutine[]>([]);
   const [hasError, setHasError] = useState<boolean>(false);
+  const {token} = useContext(authContext);
 
   useEffect(() => {
     (async () => {
       try {
-        const {data} = await getContents();
+        const {data} = await getContents(token);
+
         setContents(data);
         setHasError(false);
       } catch (error) {
         setHasError(true);
       }
     })();
-  }, []);
+  }, [token]);
 
   if (contents.length === 0 || hasError) {
     return <ActivityIndicator />;

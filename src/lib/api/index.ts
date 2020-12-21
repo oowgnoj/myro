@@ -27,8 +27,10 @@ export const postSignup = async (
 };
 
 // CONTENTS
-export const getContents = async () => {
-  return axios.get(`${DOMAIN_API}/contents`);
+export const getContents = async (token) => {
+  return axios.get(`${DOMAIN_API}/contents`,{
+    headers: {'x-access-token': token},
+  });
 };
 
 // ROUTINE
