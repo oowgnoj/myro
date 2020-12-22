@@ -24,20 +24,20 @@ import authContext from 'src/hooks/authContext';
 const Tab = createBottomTabNavigator();
 
 const App = () => {
-  console.log('####### APP 재실행 ');
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState('');
 
   useEffect(() => {
-    console.log('#########  APP 재실행', token);
-    (async () => setToken(await AsyncStorage.getItem('userToken')))();
-  }, [token]);
+    (async () => {
+      const token = await AsyncStorage.getItem('userToken')
+      token && setToken(token)
+    })();
+  }, []);
 
   const saveToken = async (token) => {
     await AsyncStorage.setItem('userToken', token);
     setToken(token);
   };
   const authProviderValue = useMemo(() => ({token, saveToken}), [token]);
-
   return (
     <AuthContext.Provider value={authProviderValue}>
       <NavigationContainer ref={navigationRef}>

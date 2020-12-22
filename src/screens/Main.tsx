@@ -24,7 +24,6 @@ type Props = {
 };
 const Index: React.FC<Props> = ({navigation}) => {
   const [contents, setContents] = useState<IContent[]>([]);
-  const [rouitnes, setRoutines] = useState<IRoutine[]>([]);
   const [hasError, setHasError] = useState<boolean>(false);
   const {token} = useContext(authContext);
 
@@ -32,10 +31,10 @@ const Index: React.FC<Props> = ({navigation}) => {
     (async () => {
       try {
         const {data} = await getContents(token);
-
         setContents(data);
         setHasError(false);
       } catch (error) {
+        console.error(error);
         setHasError(true);
       }
     })();
