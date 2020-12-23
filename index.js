@@ -39,15 +39,15 @@ PushNotification.configure({
 
     if (notificationAction === 'YES') {
       try {
-        const token = await AsyncStorage.getItem('userToken');
-        console.log('token ====>', token);
+        // const token = await AsyncStorage.getItem('userToken');
+        // console.log('token ====>', token);
         console.log('rid ====>', routineId);
         console.log('cid ====>', contentId);
         console.log('day ====>', day);
         console.log('title ====>', title);
         console.log('url ====>', url);
 
-        const res = await postSuccess(token, routineId, day);
+        const res = await postSuccess(routineId, day);
         console.log('response ', res);
       } catch (error) {
         console.log(error);

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {
   NavigationParams,
   NavigationScreenProp,
@@ -11,7 +11,6 @@ import {
   Text,
   Image,
   TouchableOpacity,
-  ActivityIndicator,
 } from 'react-native';
 import Layout from '../components/Layout';
 import WeekEntry from '@components/molecules/WeekEntry';
@@ -23,15 +22,15 @@ import {getContent} from 'src/lib/api';
 import {IContent} from 'src/types';
 import {postRoutine} from 'src/lib/api';
 import _ from 'lodash';
-import {useContext} from 'react';
 import authContext from '@hooks/authContext';
 import Globalstyle from '@constants/style';
 import {
   setRoutineNotification,
   setNotificationCategories,
 } from '../lib/notification';
-import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import {Platform} from 'react-native';
+import { OneButtonAlert } from 'src/lib/util';
+import RoutineContext from '@hooks/routineContext';
 
 type RoutineScreenRouteProp = RouteProp<string, 'Routine'>;
 
@@ -55,11 +54,13 @@ const Routine: React.FC<Props> = ({route, navigation}) => {
     sat: false,
     sun: false,
   });
-
-  const {token, saveToken} = useContext(authContext);
+  const {token} = useContext(authContext)
+  const {requestRoutine} = useContext(RoutineContext)
+  console.log('############## schedule' ,schedule)
+  console.log('############## time' ,schedule)
 
   useEffect(() => {
-    (async () => {
+    async function fetchContents() {
       try {
         const {id} = route.params;
         const {data} = await getContent(id);
@@ -68,10 +69,13 @@ const Routine: React.FC<Props> = ({route, navigation}) => {
       } catch (err) {
         console.log(err);
       }
-    })();
+    }
+
+    fetchContents()
+
     // IOS notification category 설정
     Platform.OS === 'ios' && setNotificationCategories();
-  }, []);
+  }, [token]);
 
   const showPicker = () => {
     setDatePickerVisibility(true);
@@ -99,7 +103,9 @@ const Routine: React.FC<Props> = ({route, navigation}) => {
   const onSubmit = async () => {
     if (enroll) {
       try {
-        const res = await postRoutine(token, routine.id, schedule, time);
+        const res = await postRoutine(routine.id, schedule, time);
+        await requestRoutine()
+
         if (res.status === 200) {
           setRoutineNotification(
             routine.id,
@@ -115,7 +121,22 @@ const Routine: React.FC<Props> = ({route, navigation}) => {
         console.log(error);
       }
     } else {
-      setEnroll(true);
+
+      if (!_.isEmpty(routine.routines)){
+        OneButtonAlert('알림', '이미 등록한 습관입니다', '돌아가기')
+        navigation.navigate('MyRoutine'); 
+        return
+      } 
+
+      if (!token) {
+        OneButtonAlert('알림', '로그인 후 등록해주세요', '로그인')
+        navigation.navigate('Login'); 
+        return 
+      }
+      
+      return setEnroll(true);
+
+
     }
   };
 

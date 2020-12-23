@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import {
   StyleSheet,
   ScrollView,
@@ -14,8 +14,12 @@ import {
 import Layout from '@components/Layout';
 import Banner from '@atoms/ImageWithText';
 import ContentsList from '@organisms/ContentsList';
-import {getContents} from 'src/lib/api';
-import {IContent} from 'src/types';
+
+import authContext from '@hooks/authContext';
+import routineContext from '@hooks/routineContext';
+
+import {getContents, getRoutines} from 'src/lib/api';
+import {IContent, IRoutine} from 'src/types';
 import SplashScreen from 'react-native-splash-screen'
 
 type Props = {
@@ -24,9 +28,11 @@ type Props = {
 const Index: React.FC<Props> = ({navigation}) => {
   const [contents, setContents] = useState<IContent[]>([]);
   const [hasError, setHasError] = useState<boolean>(false);
+  const {token} = useContext(authContext)
+  const {routines} = useContext(routineContext)
 
   useEffect(() => {
-    (async () => {
+    async function fetchContents() {
       try {
         const {data} = await getContents();
         setContents(data);
@@ -34,10 +40,12 @@ const Index: React.FC<Props> = ({navigation}) => {
         SplashScreen.hide();
 
       } catch (error) {
+        console.error(error);
         setHasError(true);
       }
-    })();
-  }, []);
+    }
+    fetchContents()
+  }, [token, routines]);
 
   if (contents.length === 0 || hasError) {
     return <ActivityIndicator />;

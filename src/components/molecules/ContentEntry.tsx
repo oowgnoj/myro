@@ -8,9 +8,16 @@ type Props = {
   image: string;
   title: string;
   description: string;
+  isSubscribed?: boolean;
 };
 
-const ContentEntry: React.FC<Props> = ({id, image, title, description}) => {
+const ContentEntry: React.FC<Props> = ({
+  id,
+  image,
+  title,
+  description,
+  isSubscribed = false,
+}) => {
   const navigation = useNavigation();
 
   return (
@@ -18,7 +25,7 @@ const ContentEntry: React.FC<Props> = ({id, image, title, description}) => {
       style={styles.wrapper}
       onPress={() => navigation.navigate('Routine', {id})}>
       <Image
-        style={styles.Image}
+        style={isSubscribed ? styles.SubscriptionImage : styles.Image}
         source={{
           uri: image,
         }}
@@ -36,6 +43,11 @@ const styles = StyleSheet.create({
   },
   Image: {
     flex: 1,
+  },
+  SubscriptionImage: {
+    flex: 1,
+    opacity: 0.5,
+    backgroundColor: 'black',
   },
   TitleText: {
     fontSize: 21,
