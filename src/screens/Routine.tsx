@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {
   NavigationParams,
   NavigationScreenProp,
@@ -22,7 +22,6 @@ import {getContent} from 'src/lib/api';
 import {IContent} from 'src/types';
 import {postRoutine} from 'src/lib/api';
 import _ from 'lodash';
-import {useContext} from 'react';
 import authContext from '@hooks/authContext';
 import Globalstyle from '@constants/style';
 import {
@@ -54,23 +53,25 @@ const Routine: React.FC<Props> = ({route, navigation}) => {
     sat: false,
     sun: false,
   });
-
+  const {token} = useContext(authContext)
 
   useEffect(() => {
-    (async () => {
+    async function fetchContents() {
       try {
         const {id} = route.params;
         const {data} = await getContent(id);
         setRoutine(data);
-        console.log(data)
         setTime(data.recommendTime);
       } catch (err) {
         console.log(err);
       }
-    })();
+    }
+
+    fetchContents()
+
     // IOS notification category 설정
     Platform.OS === 'ios' && setNotificationCategories();
-  }, []);
+  }, [token]);
 
   const showPicker = () => {
     setDatePickerVisibility(true);

@@ -24,19 +24,20 @@ const MyRoutine: React.FC<Props> = ({navigation}) => {
   const {token} = useContext(authContext);
   useEffect(() => {
     setLoading(true);
-    (async () => {
+    async function fetchRoutine () {
       try {
         const {data} = await getRoutines();
-        console.log('data', data)
         setRoutines(data);
+        console.log('good',data)
         setLoading(false);
-        setHasError(false);
       } catch (error) {
-        setRoutines([]);
+        setRoutines([])
         setLoading(false);
         setHasError(true);
       }
-    })();
+    }
+    
+    fetchRoutine()
   }, [token]);
 
   if (loading) {

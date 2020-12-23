@@ -25,9 +25,9 @@ type Props = {
 const Index: React.FC<Props> = ({navigation}) => {
   const [contents, setContents] = useState<IContent[]>([]);
   const [hasError, setHasError] = useState<boolean>(false);
-
+  const {token} = useContext(authContext)
   useEffect(() => {
-    (async () => {
+    async function fetchContents() {
       try {
         const {data} = await getContents();
         setContents(data);
@@ -36,8 +36,9 @@ const Index: React.FC<Props> = ({navigation}) => {
         console.error(error);
         setHasError(true);
       }
-    })();
-  }, []);
+    }
+    fetchContents()
+  }, [token]);
 
   if (contents.length === 0 || hasError) {
     return <ActivityIndicator />;
