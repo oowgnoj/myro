@@ -1,14 +1,11 @@
 import React from 'react';
 import {
-  SafeAreaView,
   View,
-  FlatList,
   StyleSheet,
-  Text,
-  StatusBar,
 } from 'react-native';
 import Content from '@molecules/ContentEntry';
 import {IContent} from 'src/types';
+import _ from 'lodash';
 type Props = {Contents: IContent[]};
 
 const App: React.FC<Props> = ({Contents}) => {
@@ -23,7 +20,7 @@ const App: React.FC<Props> = ({Contents}) => {
               title={item.title}
               image={item.mainImage}
               description={item.subTitle}
-              isSubscribed={Boolean(item.routines)}
+              isSubscribed={!_.isEmpty(item.routines)}
             />
           </View>
         );
