@@ -1,14 +1,21 @@
 import axios, {AxiosResponse} from 'axios';
 import {DOMAIN_API} from '@constants/common';
 import {Schedule} from 'models/schedule';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+axios.interceptors.request.use(
+  async (config) => {
+    const token = (await AsyncStorage.getItem('userToken')) || '';
+    config.headers['x-access-token'] = token;
+    config.headers['Content-Type'] = 'application/json';
+    return config;
+  },
+  (error) => Promise.reject(error),
+);
 
 // AUTH
 export const postLogin = async (email: string, password: string) => {
-  return axios.post(`${DOMAIN_API}/login`, JSON.stringify({email, password}), {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
+  return axios.post(`${DOMAIN_API}/login`, JSON.stringify({email, password}));
 };
 export const postSignup = async (
   email: string,
@@ -18,19 +25,12 @@ export const postSignup = async (
   return axios.post(
     `${DOMAIN_API}/signup`,
     JSON.stringify({email, password, name}),
-    {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    },
   );
 };
 
 // CONTENTS
-export const getContents = async (token) => {
-  return axios.get(`${DOMAIN_API}/contents`,{
-    headers: {'x-access-token': token},
-  });
+export const getContents = async () => {
+  return axios.get(`${DOMAIN_API}/contents`);
 };
 
 // ROUTINE
@@ -38,14 +38,11 @@ export const getContent = async (id) => {
   return axios.get(`${DOMAIN_API}/content`, {params: {id}});
 };
 
-export const getRoutines = async (token) => {
-  return axios.get(`${DOMAIN_API}/routines`, {
-    headers: {'x-access-token': token},
-  });
+export const getRoutines = async () => {
+  return axios.get(`${DOMAIN_API}/routines`);
 };
 
 export const postRoutine = async (
-  token: string,
   contents: number,
   schedule: Schedule,
   alarmTime: string,
@@ -64,17 +61,10 @@ export const postRoutine = async (
       sun,
       alarmTime,
     }),
-    {
-      headers: {
-        'Content-Type': 'application/json',
-        'x-access-token': token,
-      },
-    },
   );
 };
 
 export const postSuccess = async (
-  token: string,
   routineId: number,
   day: string,
 ) => {
@@ -84,11 +74,5 @@ export const postSuccess = async (
       routineId,
       day,
     }),
-    {
-      headers: {
-        'Content-Type': 'application/json',
-        'x-access-token': token,
-      },
-    },
   );
 };
