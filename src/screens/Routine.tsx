@@ -30,6 +30,7 @@ import {
 } from '../lib/notification';
 import {Platform} from 'react-native';
 import { OneButtonAlert } from 'src/lib/util';
+import RoutineContext from '@hooks/routineContext';
 
 type RoutineScreenRouteProp = RouteProp<string, 'Routine'>;
 
@@ -54,6 +55,9 @@ const Routine: React.FC<Props> = ({route, navigation}) => {
     sun: false,
   });
   const {token} = useContext(authContext)
+  const {requestRoutine} = useContext(RoutineContext)
+  console.log('############## schedule' ,schedule)
+  console.log('############## time' ,schedule)
 
   useEffect(() => {
     async function fetchContents() {
@@ -100,6 +104,8 @@ const Routine: React.FC<Props> = ({route, navigation}) => {
     if (enroll) {
       try {
         const res = await postRoutine(routine.id, schedule, time);
+        await requestRoutine()
+
         if (res.status === 200) {
           setRoutineNotification(
             routine.id,
@@ -119,6 +125,7 @@ const Routine: React.FC<Props> = ({route, navigation}) => {
       if (!_.isEmpty(routine.routines)){
         OneButtonAlert('알림', '이미 등록한 습관입니다', '돌아가기')
         navigation.navigate('MyRoutine'); 
+        return
       } 
 
       if (!token) {

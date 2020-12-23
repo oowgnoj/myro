@@ -15,6 +15,7 @@ import Layout from '@components/Layout';
 import Banner from '@atoms/ImageWithText';
 import ContentsList from '@organisms/ContentsList';
 import authContext from '@hooks/authContext';
+import routineContext from '@hooks/routineContext';
 
 import {getContents, getRoutines} from 'src/lib/api';
 import {IContent, IRoutine} from 'src/types';
@@ -26,6 +27,8 @@ const Index: React.FC<Props> = ({navigation}) => {
   const [contents, setContents] = useState<IContent[]>([]);
   const [hasError, setHasError] = useState<boolean>(false);
   const {token} = useContext(authContext)
+  const {routines} = useContext(routineContext)
+
   useEffect(() => {
     async function fetchContents() {
       try {
@@ -38,7 +41,7 @@ const Index: React.FC<Props> = ({navigation}) => {
       }
     }
     fetchContents()
-  }, [token]);
+  }, [token, routines]);
 
   if (contents.length === 0 || hasError) {
     return <ActivityIndicator />;

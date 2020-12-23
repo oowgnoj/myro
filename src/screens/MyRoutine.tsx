@@ -13,25 +13,24 @@ import {ErrorScreen} from '@screens';
 import {getRoutines} from 'src/lib/api';
 import {IRoutine} from 'src/types';
 import authContext from 'src/hooks/authContext';
+import RoutineContext from '@hooks/routineContext';
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 };
 
 const MyRoutine: React.FC<Props> = ({navigation}) => {
-  const [routines, setRoutines] = useState<IRoutine[]>([]);
+  // const [routines, setRoutines] = useState<IRoutine[]>([]);
   const [loading, setLoading] = useState<Boolean>(true);
   const [hasError, setHasError] = useState<Boolean>(false);
   const {token} = useContext(authContext);
+  const {routines, requestRoutine} = useContext(RoutineContext);
   useEffect(() => {
     setLoading(true);
     async function fetchRoutine () {
       try {
-        const {data} = await getRoutines();
-        setRoutines(data);
-        console.log('good',data)
+        await requestRoutine();
         setLoading(false);
       } catch (error) {
-        setRoutines([])
         setLoading(false);
         setHasError(true);
       }
