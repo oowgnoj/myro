@@ -16,6 +16,7 @@ import Banner from '@atoms/ImageWithText';
 import ContentsList from '@organisms/ContentsList';
 import {getContents} from 'src/lib/api';
 import {IContent} from 'src/types';
+import SplashScreen from 'react-native-splash-screen'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
@@ -30,6 +31,8 @@ const Index: React.FC<Props> = ({navigation}) => {
         const {data} = await getContents();
         setContents(data);
         setHasError(false);
+        SplashScreen.hide();
+
       } catch (error) {
         setHasError(true);
       }
