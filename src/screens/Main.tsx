@@ -14,11 +14,13 @@ import {
 import Layout from '@components/Layout';
 import Banner from '@atoms/ImageWithText';
 import ContentsList from '@organisms/ContentsList';
+
 import authContext from '@hooks/authContext';
 import routineContext from '@hooks/routineContext';
 
 import {getContents, getRoutines} from 'src/lib/api';
 import {IContent, IRoutine} from 'src/types';
+import SplashScreen from 'react-native-splash-screen'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
@@ -35,6 +37,8 @@ const Index: React.FC<Props> = ({navigation}) => {
         const {data} = await getContents();
         setContents(data);
         setHasError(false);
+        SplashScreen.hide();
+
       } catch (error) {
         console.error(error);
         setHasError(true);
