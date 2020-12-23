@@ -115,8 +115,21 @@ const Routine: React.FC<Props> = ({route, navigation}) => {
         console.log(error);
       }
     } else {
-      OneButtonAlert('abc.', '이미 등록한 습관입니다', '돌아가기')
-      _.isEmpty(routine.routines) && setEnroll(true);
+
+      if (!_.isEmpty(routine.routines)){
+        OneButtonAlert('알림', '이미 등록한 습관입니다', '돌아가기')
+        navigation.navigate('MyRoutine'); 
+      } 
+
+      if (!token) {
+        OneButtonAlert('알림', '로그인 후 등록해주세요', '로그인')
+        navigation.navigate('Login'); 
+        return 
+      }
+      
+      return setEnroll(true);
+
+
     }
   };
 
