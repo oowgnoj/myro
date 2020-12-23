@@ -22,12 +22,12 @@ const MyRoutine: React.FC<Props> = ({navigation}) => {
   const [loading, setLoading] = useState<Boolean>(true);
   const [hasError, setHasError] = useState<Boolean>(false);
   const {token} = useContext(authContext);
-  console.log('MY ROUTINE 실행 Access token =====>', token);
   useEffect(() => {
     setLoading(true);
     (async () => {
       try {
-        const {data} = await getRoutines(token);
+        const {data} = await getRoutines();
+        console.log('data', data)
         setRoutines(data);
         setLoading(false);
         setHasError(false);

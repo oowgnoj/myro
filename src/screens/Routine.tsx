@@ -11,7 +11,6 @@ import {
   Text,
   Image,
   TouchableOpacity,
-  ActivityIndicator,
 } from 'react-native';
 import Layout from '../components/Layout';
 import WeekEntry from '@components/molecules/WeekEntry';
@@ -31,6 +30,7 @@ import {
   setNotificationCategories,
 } from '../lib/notification';
 import {Platform} from 'react-native';
+import { OneButtonAlert } from 'src/lib/util';
 
 type RoutineScreenRouteProp = RouteProp<string, 'Routine'>;
 
@@ -55,7 +55,6 @@ const Routine: React.FC<Props> = ({route, navigation}) => {
     sun: false,
   });
 
-  const {token, saveToken} = useContext(authContext);
 
   useEffect(() => {
     (async () => {
@@ -63,6 +62,7 @@ const Routine: React.FC<Props> = ({route, navigation}) => {
         const {id} = route.params;
         const {data} = await getContent(id);
         setRoutine(data);
+        console.log(data)
         setTime(data.recommendTime);
       } catch (err) {
         console.log(err);
@@ -98,7 +98,7 @@ const Routine: React.FC<Props> = ({route, navigation}) => {
   const onSubmit = async () => {
     if (enroll) {
       try {
-        const res = await postRoutine(token, routine.id, schedule, time);
+        const res = await postRoutine(routine.id, schedule, time);
         if (res.status === 200) {
           setRoutineNotification(
             routine.id,
@@ -114,7 +114,8 @@ const Routine: React.FC<Props> = ({route, navigation}) => {
         console.log(error);
       }
     } else {
-      setEnroll(true);
+      OneButtonAlert('abc.', '이미 등록한 습관입니다', '돌아가기')
+      _.isEmpty(routine.routines) && setEnroll(true);
     }
   };
 

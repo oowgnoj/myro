@@ -20,7 +20,7 @@ export interface IContent {
   sat: Boolean;
   sun: Boolean;
   ime: string;
-  isSubscribed: boolean;
+  routines: IRoutine[] | [];
 }
 export interface IRoutine {
   id: number;

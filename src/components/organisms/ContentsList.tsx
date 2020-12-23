@@ -23,7 +23,7 @@ const App: React.FC<Props> = ({Contents}) => {
               title={item.title}
               image={item.mainImage}
               description={item.subTitle}
-              isSubscribed={item.isSubscribe}
+              isSubscribed={Boolean(item.routines)}
             />
           </View>
         );
