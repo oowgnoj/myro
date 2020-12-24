@@ -30,7 +30,6 @@ const SuccessScreen: React.FC<Props> = ({
 }) => {
   const [checked, setChecked] = useState<string>('');
   const [routine, setRoutine] = useState<IRoutine>();
-  const {token, saveToken} = useContext(authContext);
 
   useEffect(() => {
     (async () => {

@@ -43,13 +43,16 @@ const styles = StyleSheet.create({
   },
   Image: {
     flex: 1,
+    maxHeight:140,
   },
   SubscriptionImage: {
     flex: 1,
+    maxHeight:140,
     opacity: 0.5,
     backgroundColor: 'black',
   },
   TitleText: {
+    marginTop: 10,
     fontSize: 21,
     fontWeight: 'bold',
     textAlign: 'center',

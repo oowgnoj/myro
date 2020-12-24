@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   entry: {
     width: '45%',
     height: 200,
-    paddingBottom: 10,
+    marginBottom: 10,
   },
 });
 

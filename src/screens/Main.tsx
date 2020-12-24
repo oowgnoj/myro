@@ -61,7 +61,7 @@ const Index: React.FC<Props> = ({navigation}) => {
             <Banner
               image={contents[0].mainImage}
               titleText={contents[0].title}
-              description={contents[0].subTitle}
+              description={contents[0].person}
               onClick={() =>
                 navigation.navigate('Routine', {id: contents[0].id})
               }
@@ -81,10 +81,10 @@ export default Index;
 const styles = StyleSheet.create({
   root: {flex: 1},
   TextArea: {
-    marginBottom: 30,
+    marginBottom: 24,
   },
   BannerArea: {
-    height: 300,
+    height: 200,
     marginBottom: 30,
   },
   ContentsArea: {},
