@@ -56,16 +56,18 @@ const Routine: React.FC<Props> = ({route, navigation}) => {
   });
   const {token} = useContext(authContext)
   const {requestRoutine} = useContext(RoutineContext)
-  console.log('############## schedule' ,schedule)
-  console.log('############## time' ,schedule)
+  // console.log('############## schedule' ,schedule)
+  // console.log('############## time' ,schedule)
 
   useEffect(() => {
     async function fetchContents() {
       try {
         const {id} = route.params;
         const {data} = await getContent(id);
+        const {mon, tue, wed, thu, fri, sat, sun, recommendTime} = data
         setRoutine(data);
-        setTime(data.recommendTime);
+        setTime(recommendTime);
+        setSchedule({ mon, tue, wed, thu, fri, sat, sun})
       } catch (err) {
         console.log(err);
       }
@@ -149,6 +151,12 @@ const Routine: React.FC<Props> = ({route, navigation}) => {
       setCustom(true);
     }
   };
+
+  const formatTime = (time) => {
+    let dateInMills = new Date().setHours(Number(time.slice(0,2)), Number(time.slice(3)))
+    return new Date(dateInMills)
+  }
+
   if (_.isEmpty(routine)) {
     return (
       <Layout>
@@ -156,6 +164,9 @@ const Routine: React.FC<Props> = ({route, navigation}) => {
       </Layout>
     );
   }
+
+
+  
   return (
     <Layout>
       <View style={styles.root}>
@@ -186,8 +197,9 @@ const Routine: React.FC<Props> = ({route, navigation}) => {
                   </TouchableOpacity>
                 </View>
                 <TimePickerModal
-                  isVisible={isPickerVisible}
                   mode="time"
+                  date= {formatTime(time)}
+                  isVisible={isPickerVisible}
                   onConfirm={handleConfirm}
                   onCancel={hidePicker}
                 />

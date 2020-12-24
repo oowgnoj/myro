@@ -60,7 +60,7 @@ const SuccessScreen: React.FC<Props> = ({
 
     if (checked) {
       // post
-      const res = await postSuccess(token, routineId, day);
+      const res = await postSuccess( routineId, day);
       if (res.status === 200) {
         navigation.navigate('MyRoutine');
       }
