@@ -59,7 +59,7 @@ const MyRoutine: React.FC<Props> = ({navigation}) => {
   return (
     <Layout>
       <View style={styles.root}>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator ={false}>
           <View style={styles.textArea}>
             <Text style={styles.title}>My Routines</Text>
           </View>

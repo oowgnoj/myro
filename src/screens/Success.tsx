@@ -9,8 +9,6 @@ import Layout from '../components/Layout';
 import OvalButton from '@components/atoms/OvalButton';
 import RoundButton from '@components/atoms/RoundButton';
 import {getContent, postSuccess} from 'src/lib/api';
-import {useContext} from 'react';
-import authContext from '@hooks/authContext';
 import {Week} from '../models/schedule';
 import {useEffect} from 'react';
 import {IRoutine} from 'src/types';
@@ -71,7 +69,7 @@ const SuccessScreen: React.FC<Props> = ({
   return (
     <Layout>
       <View style={styles.root}>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator ={false}>
           <View style={styles.titleArea}>
             <Text style={styles.titleText}>{title}</Text>
           </View>

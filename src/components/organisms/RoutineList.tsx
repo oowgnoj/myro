@@ -20,8 +20,6 @@ const App: React.FC<Props> = ({routines}) => {
 
 const styles = StyleSheet.create({
   wrapper: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
     flexWrap: 'wrap',
   },
   entry: {

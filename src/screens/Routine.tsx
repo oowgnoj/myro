@@ -170,7 +170,7 @@ const Routine: React.FC<Props> = ({route, navigation}) => {
   return (
     <Layout>
       <View style={styles.root}>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator ={false}>
           <View style={styles.titleArea}>
             <Text style={styles.titleText}>{routine.title}</Text>
           </View>
@@ -207,7 +207,7 @@ const Routine: React.FC<Props> = ({route, navigation}) => {
             </View>
           ) : (
             <View style={styles.contentArea}>
-              <Text style={styles.contentText}>{routine.body1}</Text>
+              <Text style={styles.contentText}>{routine.body1.replace('<br/>', '\n')}</Text>
             </View>
           )}
           <View style={styles.buttonArea}>

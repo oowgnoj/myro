@@ -53,7 +53,7 @@ const Index: React.FC<Props> = ({navigation}) => {
   return (
     <Layout>
       <View style={styles.root}>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator ={false}>
           <View style={styles.TextArea}>
             <Text style={styles.titleText}>Habit</Text>
           </View>
