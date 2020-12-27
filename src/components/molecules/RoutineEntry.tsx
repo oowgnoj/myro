@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Image, StyleSheet, Text} from 'react-native';
 import OnOffCircle from '@atoms/OnOffCircle';
+
 import Thumbnail from '@atoms/Image';
 import globalstyle from '@constants/style';
 import {IRoutine} from 'src/types';
@@ -9,18 +10,20 @@ type Props = {routine: IRoutine};
 const RoutineEntry: React.FC<Props> = ({routine}) => {
   return (
     <View style={styles.wrapper}>
+      <View style={styles.textWrapper}>
       <View style={styles.text}>
         <Text style={styles.TitleText}>{routine.contents.title}</Text>
         <Text style={styles.TitleText}>{routine.alarmTime}</Text>
         <View style={styles.days}>
-          <OnOffCircle isOn={routine.mon} />
-          <OnOffCircle isOn={routine.tue} />
-          <OnOffCircle isOn={routine.wed} />
-          <OnOffCircle isOn={routine.thu} />
-          <OnOffCircle isOn={routine.fri} />
-          <OnOffCircle isOn={routine.sat} />
-          <OnOffCircle isOn={routine.sun} />
+          <OnOffCircle isOn={routine.sun} text="S"/>
+          <OnOffCircle isOn={routine.mon} text="M" />
+          <OnOffCircle isOn={routine.tue} text="T"/>
+          <OnOffCircle isOn={routine.wed} text="W"/>
+          <OnOffCircle isOn={routine.thu} text="T"/>
+          <OnOffCircle isOn={routine.fri} text="F"/>
+          <OnOffCircle isOn={routine.sat} text="S"/>
         </View>
+      </View>
       </View>
       <View style={styles.image}>
         <Thumbnail url={routine.contents.mainImage} />
@@ -35,16 +38,23 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
   },
-  text: {
+  textWrapper: {
     flex: 0.6,
+    flexDirection: 'row',
+  },
+  text: {
+    flex: 1,
+    paddingRight: 20,
     justifyContent: 'center',
   },
   image: {
     flex: 0.4,
-    aspectRatio: 1 / 1,
   },
   days: {
     flexDirection: 'row',
+    paddingRight: 20,
+    justifyContent:'space-between'
+
   },
   TitleText: {
     fontSize: 21,

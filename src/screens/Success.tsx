@@ -9,11 +9,10 @@ import Layout from '../components/Layout';
 import OvalButton from '@components/atoms/OvalButton';
 import RoundButton from '@components/atoms/RoundButton';
 import {getContent, postSuccess} from 'src/lib/api';
-import {useContext} from 'react';
-import authContext from '@hooks/authContext';
 import {Week} from '../models/schedule';
 import {useEffect} from 'react';
 import {IRoutine} from 'src/types';
+import {OneButtonAlert} from 'src/lib/util';
 
 type Props = {
   route: {
@@ -30,7 +29,6 @@ const SuccessScreen: React.FC<Props> = ({
 }) => {
   const [checked, setChecked] = useState<string>('');
   const [routine, setRoutine] = useState<IRoutine>();
-  const {token, saveToken} = useContext(authContext);
 
   useEffect(() => {
     (async () => {
@@ -55,24 +53,25 @@ const SuccessScreen: React.FC<Props> = ({
 
   const onSubmit = async () => {
     const week = Object.values(Week);
-    const index = new Date().getDay() - 1;
+    const index = new Date().getDay() - 1 >= 0 ? new Date().getDay() - 1 : 6;
     const day = week[index];
 
     if (checked) {
       // post
-      const res = await postSuccess(token, routineId, day);
+      const res = await postSuccess(routineId, day);
       if (res.status === 200) {
+        OneButtonAlert('기록하기', '성공적으로 기록되었습니다.', '확인');
         navigation.navigate('MyRoutine');
       }
     } else {
-      //alert
+      OneButtonAlert('기록하기', '다시 시도해주세요.', '확인');
     }
   };
 
   return (
     <Layout>
       <View style={styles.root}>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.titleArea}>
             <Text style={styles.titleText}>{title}</Text>
           </View>

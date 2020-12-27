@@ -1,18 +1,11 @@
 import React, {useState} from 'react';
-import {
-  StyleSheet,
-  Image,
-  View,
-  Text,
-  TextInput,
-  Button,
-  AsyncStorage,
-} from 'react-native';
+import {StyleSheet, Image, View, Text, TextInput, Button} from 'react-native';
 import {
   NavigationParams,
   NavigationScreenProp,
   NavigationState,
 } from 'react-navigation';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Layout from '../components/Layout';
 import globalstyle from '@constants/style';
 import {postSignup} from 'src/lib/api';
@@ -41,37 +34,39 @@ const Signup: React.FC<Props> = ({navigation}) => {
   return (
     <Layout>
       <View style={styles.root}>
-        <View style={styles.header}>
-          <Text style={styles.titleText}>Signup</Text>
-          <Image
-            style={{width: 130, height: 130}}
-            source={require('../assets/logo/pic.png')}
+        <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
+          <View style={styles.header}>
+            <Text style={styles.titleText}>Signup</Text>
+            <Image
+              style={{width: 130, height: 130}}
+              source={require('../assets/logo/pic.png')}
+            />
+          </View>
+          <TextInput
+            placeholder="Email"
+            placeholderTextColor={globalstyle.MAIN_WHITE}
+            style={styles.textinput}
+            onChangeText={(email) => setEmail(email)}
           />
-        </View>
-        <TextInput
-          placeholder="Email"
-          placeholderTextColor={globalstyle.MAIN_WHITE}
-          style={styles.textinput}
-          onChangeText={(email) => setEmail(email)}
-        />
-        <TextInput
-          placeholder="password"
-          secureTextEntry={true}
-          style={styles.textinput}
-          onChangeText={(pwd) => setPassword(pwd)}
-          placeholderTextColor={globalstyle.MAIN_WHITE}
-        />
-        <TextInput
-          placeholder="username"
-          secureTextEntry={true}
-          style={styles.textinput}
-          onChangeText={(username) => setUsername(username)}
-          placeholderTextColor={globalstyle.MAIN_WHITE}
-        />
-        <Button
-          onPress={handleSubmit}
-          title="continue"
-          color={globalstyle.MAIN_GREEN}></Button>
+          <TextInput
+            placeholder="password"
+            secureTextEntry={true}
+            style={styles.textinput}
+            onChangeText={(pwd) => setPassword(pwd)}
+            placeholderTextColor={globalstyle.MAIN_WHITE}
+          />
+          <TextInput
+            placeholder="username"
+            secureTextEntry={true}
+            style={styles.textinput}
+            onChangeText={(username) => setUsername(username)}
+            placeholderTextColor={globalstyle.MAIN_WHITE}
+          />
+          <Button
+            onPress={handleSubmit}
+            title="continue"
+            color={globalstyle.MAIN_GREEN}></Button>
+        </KeyboardAwareScrollView>
       </View>
     </Layout>
   );

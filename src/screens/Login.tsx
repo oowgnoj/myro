@@ -1,5 +1,7 @@
 import React, {useState, useContext} from 'react';
 import {StyleSheet, Image, View, Text, TextInput, Button} from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+
 import {
   NavigationParams,
   NavigationScreenProp,
@@ -32,6 +34,7 @@ const Login: React.FC<Props> = ({navigation}) => {
   return (
     <Layout>
       <View style={styles.root}>
+      <KeyboardAwareScrollView showsVerticalScrollIndicator ={false}>
         <View style={styles.header}>
           <Text style={styles.titleText}>Login</Text>
           <Image
@@ -62,6 +65,7 @@ const Login: React.FC<Props> = ({navigation}) => {
           title="register"
           color={globalstyle.MAIN_GREEN}
         />
+      </KeyboardAwareScrollView>
       </View>
     </Layout>
   );

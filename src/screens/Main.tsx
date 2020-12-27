@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import {
   StyleSheet,
   ScrollView,
@@ -14,8 +14,13 @@ import {
 import Layout from '@components/Layout';
 import Banner from '@atoms/ImageWithText';
 import ContentsList from '@organisms/ContentsList';
-import {getContents} from 'src/lib/api';
-import {IContent} from 'src/types';
+
+import authContext from '@hooks/authContext';
+import routineContext from '@hooks/routineContext';
+
+import {getContents, getRoutines} from 'src/lib/api';
+import {IContent, IRoutine} from 'src/types';
+import SplashScreen from 'react-native-splash-screen'
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
@@ -23,18 +28,24 @@ type Props = {
 const Index: React.FC<Props> = ({navigation}) => {
   const [contents, setContents] = useState<IContent[]>([]);
   const [hasError, setHasError] = useState<boolean>(false);
+  const {token} = useContext(authContext)
+  const {routines} = useContext(routineContext)
 
   useEffect(() => {
-    (async () => {
+    async function fetchContents() {
       try {
         const {data} = await getContents();
         setContents(data);
         setHasError(false);
+        SplashScreen.hide();
+
       } catch (error) {
+        console.error(error);
         setHasError(true);
       }
-    })();
-  }, []);
+    }
+    fetchContents()
+  }, [token, routines]);
 
   if (contents.length === 0 || hasError) {
     return <ActivityIndicator />;
@@ -42,7 +53,7 @@ const Index: React.FC<Props> = ({navigation}) => {
   return (
     <Layout>
       <View style={styles.root}>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator ={false}>
           <View style={styles.TextArea}>
             <Text style={styles.titleText}>Habit</Text>
           </View>
@@ -50,7 +61,7 @@ const Index: React.FC<Props> = ({navigation}) => {
             <Banner
               image={contents[0].mainImage}
               titleText={contents[0].title}
-              description={contents[0].subTitle}
+              description={contents[0].person}
               onClick={() =>
                 navigation.navigate('Routine', {id: contents[0].id})
               }
@@ -70,10 +81,10 @@ export default Index;
 const styles = StyleSheet.create({
   root: {flex: 1},
   TextArea: {
-    marginBottom: 30,
+    marginBottom: 24,
   },
   BannerArea: {
-    height: 300,
+    height: 200,
     marginBottom: 30,
   },
   ContentsArea: {},

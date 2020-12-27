@@ -13,30 +13,30 @@ import {ErrorScreen} from '@screens';
 import {getRoutines} from 'src/lib/api';
 import {IRoutine} from 'src/types';
 import authContext from 'src/hooks/authContext';
+import RoutineContext from '@hooks/routineContext';
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 };
 
 const MyRoutine: React.FC<Props> = ({navigation}) => {
-  const [routines, setRoutines] = useState<IRoutine[]>([]);
+  // const [routines, setRoutines] = useState<IRoutine[]>([]);
   const [loading, setLoading] = useState<Boolean>(true);
   const [hasError, setHasError] = useState<Boolean>(false);
   const {token} = useContext(authContext);
-  console.log('MY ROUTINE 실행 Access token =====>', token);
+  const {routines, requestRoutine} = useContext(RoutineContext);
   useEffect(() => {
     setLoading(true);
-    (async () => {
+    async function fetchRoutine () {
       try {
-        const {data} = await getRoutines(token);
-        setRoutines(data);
+        await requestRoutine();
         setLoading(false);
-        setHasError(false);
       } catch (error) {
-        setRoutines([]);
         setLoading(false);
         setHasError(true);
       }
-    })();
+    }
+    
+    fetchRoutine()
   }, [token]);
 
   if (loading) {
@@ -59,7 +59,7 @@ const MyRoutine: React.FC<Props> = ({navigation}) => {
   return (
     <Layout>
       <View style={styles.root}>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator ={false}>
           <View style={styles.textArea}>
             <Text style={styles.title}>My Routines</Text>
           </View>

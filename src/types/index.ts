@@ -20,6 +20,7 @@ export interface IContent {
   sat: Boolean;
   sun: Boolean;
   ime: string;
+  routines: IRoutine[] | [];
 }
 export interface IRoutine {
   id: number;
