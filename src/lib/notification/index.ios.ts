@@ -36,8 +36,7 @@ const setRoutineNotification = (
   schedule: Schedule,
   time: string,
 ) => {
-  console.log('#### schedule', schedule);
-  console.log('#### time', time);
+
   const targetDates = getTargetDates(schedule, time);
   console.log('#### target date', targetDates);
   PushNotificationIOS.removeAllPendingNotificationRequests();
@@ -48,7 +47,7 @@ const setRoutineNotification = (
       fireDate: date.toISOString(),
       alertTitle: title,
       userInfo: {contentId, routineId, day, title, url},
-      alertBody: date.toISOString(),
+      alertBody: "실천해볼까요?",
       category: 'success',
     });
   });
