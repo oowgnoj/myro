@@ -10,7 +10,9 @@ const App: React.FC<Props> = ({routines}) => {
       {routines.map((item) => {
         return (
           <View style={styles.entry} key={item.id}>
-            <MyContent key={item.id} routine={item} />
+            <MyContent key={item.id} title={item.contents.title} alarmTime={item.alarmTime} 
+                       mainImage={item.contents.mainImage} sun={item.sun} mon={item.mon} tue={item.tue} 
+                       wed={item.wed} thu={item.thu} fri={item.fri} sat={item.sat}/>
           </View>
         );
       })}

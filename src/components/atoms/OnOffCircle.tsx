@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import globalstyle from '@constants/style';
-type Props = {isOn: boolean, text: string};
+type Props = {isOn: Boolean, text: string};
 
 const OnOffCircle: React.FC<Props> = ({isOn, text}) => {
   const on = Boolean(isOn);

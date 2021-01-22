@@ -76,3 +76,10 @@ export const postSuccess = async (
     }),
   );
 };
+
+
+
+// Statistics
+export const getStats = async () => {
+  return axios.get(`${DOMAIN_API}/statistic`);
+};

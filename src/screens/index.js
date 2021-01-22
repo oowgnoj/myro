@@ -6,3 +6,4 @@ export {default as MypageScreen} from './Mypage';
 export {default as SignupScreen} from './Signup';
 export {default as RoutineScreen} from './Routine';
 export {default as ErrorScreen} from './Error';
+export {default as SearchScreen} from './Search';

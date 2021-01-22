@@ -8,7 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   LoginScreen,
   SignupScreen,
-  MypageScreen,
+  SearchScreen,
   MyRoutineScreen,
   MainScreen,
   RoutineScreen,
@@ -60,8 +60,8 @@ const App = () => {
               }}
             />
             <Tab.Screen
-              name="MyRoutine"
-              component={MyRoutineScreen}
+              name="Search"
+              component={SearchScreen}
               options={{
                 tabBarIcon: ({color, size}) => (
                   <Icon name="list-alt" size={20} color="#fff" />
@@ -70,7 +70,7 @@ const App = () => {
             />
             <Tab.Screen
               name="Info"
-              component={token ? MypageScreen : AuthStackScreen}
+              component={token ? MyRoutineScreen : AuthStackScreen}
               options={{
                 tabBarIcon: ({color, size}) => (
                   <Icon name="user" size={20} color="#fff" />

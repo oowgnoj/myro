@@ -22,17 +22,24 @@ export interface IContent {
   ime: string;
   routines: IRoutine[] | [];
 }
+
 export interface IRoutine {
   id: number;
   contents: IContent;
-  mon: boolean;
-  tue: boolean;
-  wed: boolean;
-  thu: boolean;
-  fri: boolean;
-  sat: boolean;
-  sun: boolean;
+  mon: Boolean;
+  tue: Boolean;
+  wed: Boolean;
+  thu: Boolean;
+  fri: Boolean;
+  sat: Boolean;
+  sun: Boolean;
   alarmTime: string;
-  isAlarm: boolean;
-  isActive: boolean;
+  isAlarm: Boolean;
+  isActive: Boolean;
+}
+
+
+export interface IStatistics {
+  title: string
+  contents: IContent[]
 }
