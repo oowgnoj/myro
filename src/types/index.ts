@@ -12,13 +12,13 @@ export interface IContent {
   body2: string;
   body3: string;
   recommendTime: string;
-  mon: Boolean;
-  tue: Boolean;
-  wed: Boolean;
-  thr: Boolean;
-  fri: Boolean;
-  sat: Boolean;
-  sun: Boolean;
+  mon: boolean;
+  tue: boolean;
+  wed: boolean;
+  thr: boolean;
+  fri: boolean;
+  sat: boolean;
+  sun: boolean;
   ime: string;
   routines: IRoutine[] | [];
 }
@@ -26,16 +26,16 @@ export interface IContent {
 export interface IRoutine {
   id: number;
   contents: IContent;
-  mon: Boolean;
-  tue: Boolean;
-  wed: Boolean;
-  thu: Boolean;
-  fri: Boolean;
-  sat: Boolean;
-  sun: Boolean;
+  mon: boolean;
+  tue: boolean;
+  wed: boolean;
+  thu: boolean;
+  fri: boolean;
+  sat: boolean;
+  sun: boolean;
   alarmTime: string;
-  isAlarm: Boolean;
-  isActive: Boolean;
+  isAlarm: boolean;
+  isActive: boolean;
 }
 
 

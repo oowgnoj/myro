@@ -9,14 +9,6 @@ type Props = {
 };
 
 const WeekEntry: React.FC<Props> = ({schedule, handleSchedule}) => {
-  /* const [mon, activeMon] = useState(false);
-  const [tue, activeTue] = useState(false);
-  const [wed, activeWed] = useState(false);
-  const [thu, activeThu] = useState(false);
-  const [fri, activeFri] = useState(false);
-  const [sat, activeSat] = useState(false);
-  const [sun, activeSun] = useState(false); */
-
   const handleStatus = (text: string, active: boolean) => {
     handleSchedule(text, active);
   };

@@ -1,25 +1,30 @@
 import React from 'react';
-import {View, Image, StyleSheet, Text} from 'react-native';
-import OnOffCircle from '@atoms/OnOffCircle';
+import {View,  StyleSheet, Text} from 'react-native';
+import RoundButton from '@atoms/RoundButton';
+import {
+  NavigationParams,
+  NavigationScreenProp,
+  NavigationState,
+} from 'react-navigation';
 
-import Thumbnail from '@atoms/Image';
+import Thumbnail from '@atoms/ClickableImage';
 import globalstyle from '@constants/style';
-import {IContent, IRoutine} from 'src/types';
 
 type Props = {
+  sun: boolean;
+  mon: boolean;
+  tue: boolean;
+  wed: boolean;
+  thu: boolean;
+  fri: boolean;
+  sat: boolean;
   title: string;
   alarmTime: string;
-  sun: Boolean;
-  mon: Boolean;
-  tue: Boolean;
-  wed: Boolean;
-  thu: Boolean;
-  fri: Boolean;
-  sat: Boolean;
   mainImage: string;
+  onClick: ()=>void
 };
 
-const RoutineEntry: React.FC<Props> = ({
+const RoutineCard: React.FC<Props> = ({
   title,
   alarmTime,
   sun,
@@ -30,6 +35,7 @@ const RoutineEntry: React.FC<Props> = ({
   fri,
   sat,
   mainImage,
+  onClick
 }) => {
   return (
     <View style={styles.wrapper}>
@@ -38,23 +44,23 @@ const RoutineEntry: React.FC<Props> = ({
           <Text style={styles.TitleText}>{title}</Text>
           <Text style={styles.alarmText}>{alarmTime}</Text>
           <View style={styles.days}>
-            <OnOffCircle isOn={sun} text="S" />
-            <OnOffCircle isOn={mon} text="M" />
-            <OnOffCircle isOn={tue} text="T" />
-            <OnOffCircle isOn={wed} text="W" />
-            <OnOffCircle isOn={thu} text="T" />
-            <OnOffCircle isOn={fri} text="F" />
-            <OnOffCircle isOn={sat} text="S" />
+            <RoundButton size="small" isActive={sun} text="S" />
+            <RoundButton size="small" isActive={mon} text="M" />
+            <RoundButton size="small" isActive={tue} text="T" />
+            <RoundButton size="small" isActive={wed} text="W" />
+            <RoundButton size="small" isActive={thu} text="T" />
+            <RoundButton size="small" isActive={fri} text="F" />
+            <RoundButton size="small" isActive={sat} text="S" />
           </View>
         </View>
       </View>
       <View style={styles.image}>
-        <Thumbnail url={mainImage} />
+        <Thumbnail url={mainImage} onClick={onClick} />
       </View>
     </View>
   );
 };
-export default RoutineEntry;
+export default RoutineCard;
 
 const styles = StyleSheet.create({
   wrapper: {

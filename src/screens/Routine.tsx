@@ -13,7 +13,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Layout from '../components/Layout';
-import WeekEntry from '@components/molecules/WeekEntry';
+import WeekBoard from '@components/molecules/WeekBoard';
 import {Week} from '../models/schedule';
 import OvalButton from '@components/atoms/OvalButton';
 import TimePickerModal from 'react-native-modal-datetime-picker';
@@ -189,7 +189,7 @@ const Routine: React.FC<Props> = ({route, navigation}) => {
                   ? '기억하실 수 있게 \n알람을 보내드려요.'
                   : '미로에서 \n추천해드리는 일정이에요.'}
               </Text>
-              <WeekEntry schedule={schedule} handleSchedule={handleSchedule} />
+              <WeekBoard schedule={schedule} handleSchedule={handleSchedule} />
               <View style={styles.selectForm}>
                 <View style={styles.selectTime}>
                   <TouchableOpacity onPress={showPicker}>

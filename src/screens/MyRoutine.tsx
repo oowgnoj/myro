@@ -4,29 +4,26 @@ import {
   NavigationParams,
   NavigationScreenProp,
   NavigationState,
-  NavigationContainer,
 } from 'react-navigation';
 import _ from 'lodash';
 import Layout from '@components/Layout';
-import MyContentsList from '@components/organisms/RoutineList';
+import RoutineCard from '@components/molecules/RoutineCard';
 import {ErrorScreen} from '@screens';
-import {getRoutines} from 'src/lib/api';
-import {IRoutine} from 'src/types';
 import authContext from 'src/hooks/authContext';
 import RoutineContext from '@hooks/routineContext';
+import {IRoutine} from 'src/types';
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 };
 
 const MyRoutine: React.FC<Props> = ({navigation}) => {
-  // const [routines, setRoutines] = useState<IRoutine[]>([]);
   const [loading, setLoading] = useState<Boolean>(true);
   const [hasError, setHasError] = useState<Boolean>(false);
   const {token} = useContext(authContext);
   const {routines, requestRoutine} = useContext(RoutineContext);
   useEffect(() => {
     setLoading(true);
-    async function fetchRoutine () {
+    async function fetchRoutine() {
       try {
         await requestRoutine();
         setLoading(false);
@@ -35,8 +32,8 @@ const MyRoutine: React.FC<Props> = ({navigation}) => {
         setHasError(true);
       }
     }
-    
-    fetchRoutine()
+
+    fetchRoutine();
   }, [token]);
 
   if (loading) {
@@ -59,12 +56,28 @@ const MyRoutine: React.FC<Props> = ({navigation}) => {
   return (
     <Layout>
       <View style={styles.root}>
-        <ScrollView showsVerticalScrollIndicator ={false}>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.textArea}>
             <Text style={styles.title}>My Routines</Text>
           </View>
           <View style={styles.ContentsArea}>
-            <MyContentsList routines={routines} />
+            {routines.map((routine) => (
+              <View style={styles.entry}>
+              <RoutineCard
+                sun={routine.sun}
+                mon={routine.mon}
+                tue={routine.tue}
+                wed={routine.wed}
+                thu={routine.thu}
+                fri={routine.fri}
+                sat={routine.sat}
+                alarmTime={routine.alarmTime}
+                title={routine.contents.title}
+                mainImage={routine.contents.mainImage}
+                onClick={() =>navigation.navigate('Routine', {id: routine.contents.id})}
+              />
+              </View>
+            ))}
           </View>
         </ScrollView>
       </View>
@@ -76,7 +89,6 @@ export default MyRoutine;
 
 const styles = StyleSheet.create({
   root: {flex: 1},
-
   textArea: {
     marginBottom: 30,
   },
@@ -89,5 +101,10 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 30,
     fontWeight: 'bold',
+  },
+  entry: {
+    width: '100%',
+    height: 120,
+    marginBottom: 50,
   },
 });

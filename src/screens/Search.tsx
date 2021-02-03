@@ -17,7 +17,7 @@ import {ErrorScreen} from '@screens';
 import authContext from 'src/hooks/authContext';
 import {getStats} from 'src/lib/api';
 import {IStatistics} from 'src/types';
-import RoutineEntry from '@components/molecules/RoutineEntry';
+import RoutineCard from '@components/molecules/RoutineCard';
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
@@ -76,14 +76,9 @@ const Search: React.FC<Props> = ({navigation}) => {
                 <View style={styles.contentArea}>
                   <Text style={styles.subTitle}>{element.title}</Text>
                   {element.contents.map((content) => (
-                    <View style={styles.contentArea}>
-                      <TouchableOpacity
-                        onPress={() => {
-                          navigation.navigate('Routine', {
-                            id: content.id,
-                          });
-                        }}>
-                        <RoutineEntry
+
+                      <View style={styles.contentArea}>
+                        <RoutineCard
                           alarmTime={content.recommendTime}
                           mainImage={content.mainImage}
                           title={content.title}
@@ -94,9 +89,10 @@ const Search: React.FC<Props> = ({navigation}) => {
                           thu={content.thr}
                           fri={content.fri}
                           sat={content.sat}
+                          onClick={() =>navigation.navigate('Routine', {id: content.id})}
                         />
-                      </TouchableOpacity>
-                    </View>
+                      </View>
+
                   ))}
                 </View>
               ))}

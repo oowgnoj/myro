@@ -3,12 +3,12 @@ import {
   View,
   StyleSheet,
 } from 'react-native';
-import Content from '@molecules/ContentEntry';
+import Content from '@molecules/ContentCard';
 import {IContent} from 'src/types';
 import _ from 'lodash';
 type Props = {Contents: IContent[]};
 
-const App: React.FC<Props> = ({Contents}) => {
+const ContentList: React.FC<Props> = ({Contents}) => {
   return (
     <View style={styles.wrapper}>
       {Contents.map((item) => {
@@ -42,4 +42,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+export default ContentList;

@@ -24,16 +24,14 @@ const RoundButton: React.FC<Props> = ({size, text, isActive, handleStatus}) => {
     <TouchableOpacity
       style={styles[getStyle('button', size, isActive)]}
       onPress={onClick}>
-      {text ? (
-        <Text style={styles[getStyle('text', size, isActive)]}> {text} </Text>
-      ) : null}
+      {text && <Text style={styles[getStyle('text', size, isActive)]}> {text} </Text>}
     </TouchableOpacity>
   );
 };
 export default RoundButton;
 
 const buttonSize = {
-  small: 11,
+  small: 20,
   medium: 33,
   large: 55,
 };
@@ -51,7 +49,7 @@ const buttonBase = {
 };
 
 const fontSize = {
-  small: 6,
+  small: 11,
   medium: 15,
   large: 20,
 };
