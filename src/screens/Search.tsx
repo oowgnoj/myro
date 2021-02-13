@@ -16,7 +16,7 @@ import Layout from '@components/Layout';
 import {ErrorScreen} from '@screens';
 import authContext from 'src/hooks/authContext';
 import {getStats} from 'src/lib/api';
-import {IStatistics} from 'src/types';
+import {IStatistics} from 'src/models';
 import RoutineCard from '@components/molecules/RoutineCard';
 
 type Props = {
@@ -76,19 +76,12 @@ const Search: React.FC<Props> = ({navigation}) => {
                 <View style={styles.contentArea}>
                   <Text style={styles.subTitle}>{element.title}</Text>
                   {element.contents.map((content) => (
-
                       <View style={styles.contentArea}>
                         <RoutineCard
                           alarmTime={content.recommendTime}
                           mainImage={content.mainImage}
                           title={content.title}
-                          sun={content.sun}
-                          mon={content.mon}
-                          tue={content.tue}
-                          wed={content.wed}
-                          thu={content.thr}
-                          fri={content.fri}
-                          sat={content.sat}
+                          days={content.days}
                           onClick={() =>navigation.navigate('Routine', {id: content.id})}
                         />
                       </View>

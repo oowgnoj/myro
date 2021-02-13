@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 
 export const days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+export const daysInKorean = ['일', '월', '화', '수', '목', '금', '토'];
 
 import {Schedule} from 'models/schedule';
 import {Alert} from 'react-native';

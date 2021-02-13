@@ -45,15 +45,7 @@ const Routine: React.FC<Props> = ({route, navigation}) => {
   const [custom, setCustom] = useState(false);
   const [isPickerVisible, setDatePickerVisibility] = useState(false);
   const [time, setTime] = useState('');
-  const [schedule, setSchedule] = useState({
-    mon: true,
-    tue: false,
-    wed: false,
-    thu: true,
-    fri: false,
-    sat: false,
-    sun: false,
-  });
+  const [schedule, setSchedule] = useState([0,0,0,0,0,0,0]);
   const {token} = useContext(authContext)
   const {requestRoutine} = useContext(RoutineContext)
   // console.log('############## schedule' ,schedule)
@@ -64,10 +56,10 @@ const Routine: React.FC<Props> = ({route, navigation}) => {
       try {
         const {id} = route.params;
         const {data} = await getContent(id);
-        const {mon, tue, wed, thu, fri, sat, sun, recommendTime} = data
+        const {days, recommendTime} = data
         setRoutine(data);
         setTime(recommendTime);
-        setSchedule({ mon, tue, wed, thu, fri, sat, sun})
+        setSchedule(days)
       } catch (err) {
         console.log(err);
       }
@@ -189,7 +181,7 @@ const Routine: React.FC<Props> = ({route, navigation}) => {
                   ? '기억하실 수 있게 \n알람을 보내드려요.'
                   : '미로에서 \n추천해드리는 일정이에요.'}
               </Text>
-              <WeekBoard schedule={schedule} handleSchedule={handleSchedule} />
+              <WeekBoard days={routine.days} handleSchedule={handleSchedule} />
               <View style={styles.selectForm}>
                 <View style={styles.selectTime}>
                   <TouchableOpacity onPress={showPicker}>

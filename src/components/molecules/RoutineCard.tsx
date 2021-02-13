@@ -11,13 +11,7 @@ import Thumbnail from '@atoms/ClickableImage';
 import globalstyle from '@constants/style';
 
 type Props = {
-  sun: boolean;
-  mon: boolean;
-  tue: boolean;
-  wed: boolean;
-  thu: boolean;
-  fri: boolean;
-  sat: boolean;
+  days: Array<Number>;
   title: string;
   alarmTime: string;
   mainImage: string;
@@ -27,14 +21,8 @@ type Props = {
 const RoutineCard: React.FC<Props> = ({
   title,
   alarmTime,
-  sun,
-  mon,
-  tue,
-  wed,
-  thu,
-  fri,
-  sat,
   mainImage,
+  days,
   onClick
 }) => {
   return (
@@ -44,13 +32,7 @@ const RoutineCard: React.FC<Props> = ({
           <Text style={styles.TitleText}>{title}</Text>
           <Text style={styles.alarmText}>{alarmTime}</Text>
           <View style={styles.days}>
-            <RoundButton size="small" isActive={sun} text="S" />
-            <RoundButton size="small" isActive={mon} text="M" />
-            <RoundButton size="small" isActive={tue} text="T" />
-            <RoundButton size="small" isActive={wed} text="W" />
-            <RoundButton size="small" isActive={thu} text="T" />
-            <RoundButton size="small" isActive={fri} text="F" />
-            <RoundButton size="small" isActive={sat} text="S" />
+            {days.map(day => <RoundButton size="small" isActive={Boolean(day)}></RoundButton>)}
           </View>
         </View>
       </View>

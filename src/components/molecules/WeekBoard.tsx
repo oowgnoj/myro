@@ -2,28 +2,27 @@ import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import RoundButton from '@components/atoms/RoundButton';
 import {Week, Schedule} from '../../models/schedule';
+import {daysInKorean} from '../../lib/util';
 
 type Props = {
-  schedule: Schedule;
+  days: Array<Number>;
   handleSchedule?: (text: string, active: boolean) => void;
 };
 
-const WeekEntry: React.FC<Props> = ({schedule, handleSchedule}) => {
+const WeekEntry: React.FC<Props> = ({days, handleSchedule}) => {
   const handleStatus = (text: string, active: boolean) => {
     handleSchedule(text, active);
   };
 
-  const weekTexts = Object.keys(Week);
 
   return (
     <View style={styles.wrapper}>
-      {weekTexts.map((day, i) => {
-        const status = schedule[Week[day]];
+      {days.map((isActive, i) => {
         return (
           <RoundButton
             size="medium"
-            text={day}
-            isActive={status}
+            text={daysInKorean[i]}
+            isActive={Boolean(isActive)}
             handleStatus={handleStatus}
             key={i}
           />

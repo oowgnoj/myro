@@ -77,13 +77,7 @@ const MyRoutine: React.FC<Props> = ({navigation}) => {
             {routines.map((routine) => (
               <View style={styles.entry}>
               <RoutineCard
-                sun={routine.sun}
-                mon={routine.mon}
-                tue={routine.tue}
-                wed={routine.wed}
-                thu={routine.thu}
-                fri={routine.fri}
-                sat={routine.sat}
+                days={routine.days}
                 alarmTime={routine.alarmTime}
                 title={routine.contents.title}
                 mainImage={routine.contents.mainImage}

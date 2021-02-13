@@ -18,8 +18,8 @@ import ContentsList from '@organisms/ContentsList';
 import authContext from '@hooks/authContext';
 import routineContext from '@hooks/routineContext';
 
-import {getContents, getRoutines} from 'src/lib/api';
-import {IContent, IRoutine} from 'src/models';
+import {getContents} from 'src/lib/api';
+import {IContent} from 'src/models';
 import SplashScreen from 'react-native-splash-screen'
 
 type Props = {
