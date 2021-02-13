@@ -57,7 +57,6 @@ const Signup: React.FC<Props> = ({navigation}) => {
           />
           <TextInput
             placeholder="username"
-            secureTextEntry={true}
             style={styles.textinput}
             onChangeText={(username) => setUsername(username)}
             placeholderTextColor={globalstyle.MAIN_WHITE}

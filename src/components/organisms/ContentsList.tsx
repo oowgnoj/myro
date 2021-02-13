@@ -4,7 +4,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import Content from '@molecules/ContentCard';
-import {IContent} from 'src/types';
+import {IContent} from 'src/models';
 import _ from 'lodash';
 type Props = {Contents: IContent[]};
 

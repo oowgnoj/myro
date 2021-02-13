@@ -19,7 +19,7 @@ import OvalButton from '@components/atoms/OvalButton';
 import TimePickerModal from 'react-native-modal-datetime-picker';
 import {RouteProp} from '@react-navigation/native';
 import {getContent} from 'src/lib/api';
-import {IContent} from 'src/types';
+import {IContent} from 'src/models';
 import {postRoutine} from 'src/lib/api';
 import _ from 'lodash';
 import authContext from '@hooks/authContext';
@@ -117,7 +117,7 @@ const Routine: React.FC<Props> = ({route, navigation}) => {
             schedule,
             time,
           );
-          navigation.navigate('MyRoutine');
+          navigation.navigate('MyPage');
         }
       } catch (error) {
         console.log(error);
@@ -126,7 +126,7 @@ const Routine: React.FC<Props> = ({route, navigation}) => {
 
       if (!_.isEmpty(routine.routines)){
         OneButtonAlert('알림', '이미 등록한 습관입니다', '돌아가기')
-        navigation.navigate('MyRoutine'); 
+        navigation.navigate('MyPage'); 
         return
       } 
 

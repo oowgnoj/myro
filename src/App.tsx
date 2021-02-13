@@ -69,7 +69,7 @@ const App = () => {
               }}
             />
             <Tab.Screen
-              name="Info"
+              name="MyPage"
               component={token ? MyRoutineScreen : AuthStackScreen}
               options={{
                 tabBarIcon: ({color, size}) => (

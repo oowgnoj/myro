@@ -1,17 +1,19 @@
 import React, {useState, useEffect, useContext} from 'react';
-import {StyleSheet, ScrollView, View, Text, Image} from 'react-native';
+import {StyleSheet, ScrollView, View, Text, } from 'react-native';
 import {
   NavigationParams,
   NavigationScreenProp,
   NavigationState,
 } from 'react-navigation';
 import _ from 'lodash';
+
 import Layout from '@components/Layout';
 import RoutineCard from '@components/molecules/RoutineCard';
 import {ErrorScreen} from '@screens';
 import authContext from 'src/hooks/authContext';
 import RoutineContext from '@hooks/routineContext';
-import {IRoutine} from 'src/types';
+import RoundButton from '@components/atoms/RoundButton';
+
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 };
@@ -19,7 +21,7 @@ type Props = {
 const MyRoutine: React.FC<Props> = ({navigation}) => {
   const [loading, setLoading] = useState<Boolean>(true);
   const [hasError, setHasError] = useState<Boolean>(false);
-  const {token} = useContext(authContext);
+  const {token, saveToken} = useContext(authContext);
   const {routines, requestRoutine} = useContext(RoutineContext);
   useEffect(() => {
     setLoading(true);
@@ -32,9 +34,18 @@ const MyRoutine: React.FC<Props> = ({navigation}) => {
         setHasError(true);
       }
     }
-
     fetchRoutine();
   }, [token]);
+
+  const requestLogout = async () => {
+    try {
+      await saveToken('');
+      navigation.navigate('Home');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
 
   if (loading) {
     return (
@@ -57,8 +68,10 @@ const MyRoutine: React.FC<Props> = ({navigation}) => {
     <Layout>
       <View style={styles.root}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={styles.textArea}>
+          <View style={styles.topbar}>
             <Text style={styles.title}>My Routines</Text>
+            
+            <RoundButton size={'medium'} isActive={false} text="P" handleStatus={()=> requestLogout()}/>
           </View>
           <View style={styles.ContentsArea}>
             {routines.map((routine) => (
@@ -89,7 +102,11 @@ export default MyRoutine;
 
 const styles = StyleSheet.create({
   root: {flex: 1},
-  textArea: {
+  topbar: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignContent: 'flex-start',
     marginBottom: 30,
   },
   BannerArea: {

@@ -1,3 +1,4 @@
+
 export enum Week {
   '월' = 'mon',
   '화' = 'tue',
@@ -17,6 +18,7 @@ export interface Schedule {
   sat: boolean;
   sun: boolean;
 }
+
 
 // export class Schedule {
 //   mon: boolean;
