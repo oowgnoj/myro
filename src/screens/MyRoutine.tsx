@@ -13,6 +13,7 @@ import {ErrorScreen} from '@screens';
 import authContext from 'src/hooks/authContext';
 import RoutineContext from '@hooks/routineContext';
 import RoundButton from '@components/atoms/RoundButton';
+import {Alert} from 'react-native';
 
 type Props = {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
@@ -37,14 +38,15 @@ const MyRoutine: React.FC<Props> = ({navigation}) => {
     fetchRoutine();
   }, [token]);
 
-  const requestLogout = async () => {
-    try {
-      await saveToken('');
-      navigation.navigate('Home');
-    } catch (error) {
-      console.log(error);
-    }
-  };
+
+  const logout = async ()=>{
+    await saveToken('');
+    navigation.navigate('Home');
+  }
+
+  const requestLogout = () => {
+    Alert.alert('로그아웃','로그아웃 하시겠습니까?',[{text: '취소'}, {text:'로그아웃', onPress: logout}])
+  }
 
 
   if (loading) {
@@ -64,6 +66,8 @@ const MyRoutine: React.FC<Props> = ({navigation}) => {
       />
     );
   }
+
+
   return (
     <Layout>
       <View style={styles.root}>
@@ -71,7 +75,7 @@ const MyRoutine: React.FC<Props> = ({navigation}) => {
           <View style={styles.topbar}>
             <Text style={styles.title}>My Routines</Text>
             
-            <RoundButton size={'medium'} isActive={false} text="P" handleStatus={()=> requestLogout()}/>
+            <RoundButton size={'medium'} isActive={false} text="👤" handleStatus={()=>  requestLogout()}/>
           </View>
           <View style={styles.ContentsArea}>
             {routines.map((routine) => (
