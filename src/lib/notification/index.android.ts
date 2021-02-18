@@ -8,13 +8,7 @@ import {Image} from 'react-native';
 const days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
 
 const getTargetDates = (schedule: Schedule, time: string) => {
-  console.log('get target dates', schedule);
-  const activeDays = [];
-  for (const day in schedule) {
-    if (schedule[day]) {
-      activeDays.push(days.indexOf(day));
-    }
-  }
+
 
   const targetDates = [];
   const policy = 2; // 2주
@@ -23,7 +17,7 @@ const getTargetDates = (schedule: Schedule, time: string) => {
 
   let now = dayjs();
   for (let i = 0; i < policy; i++) {
-    activeDays.forEach((day) => {
+    schedule.forEach((day) => {
       const computed = now.day(day).hour(hour).minute(minute).second(0);
       if (computed.isAfter(now)) {
         targetDates.push(computed.toDate());

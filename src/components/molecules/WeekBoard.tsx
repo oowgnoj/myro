@@ -2,7 +2,7 @@ import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import RoundButton from '@components/atoms/RoundButton';
 import {Week, Schedule} from '../../models/schedule';
-import {daysInKorean} from '../../lib/util';
+import {daysInKor} from '../../lib/util';
 
 type Props = {
   days: Array<Number>;
@@ -16,7 +16,7 @@ const WeekEntry: React.FC<Props> = ({days, handleSchedule}) => {
         return (
           <RoundButton
             size="medium"
-            text={daysInKorean[i]}
+            text={daysInKor[i]}
             isActive={Boolean(isActive)}
             handleStatus={() => handleSchedule(i)}
             key={i}

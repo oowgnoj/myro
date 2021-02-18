@@ -9,6 +9,7 @@ import {
 
 import Thumbnail from '@atoms/ClickableImage';
 import globalstyle from '@constants/style';
+import { daysInEng, daysInKor } from 'src/lib/util';
 
 type Props = {
   days: Array<Number>;
@@ -32,7 +33,7 @@ const RoutineCard: React.FC<Props> = ({
           <Text style={styles.TitleText}>{title}</Text>
           <Text style={styles.alarmText}>{alarmTime}</Text>
           <View style={styles.days}>
-            {days.map(day => <RoundButton size="small" isActive={Boolean(day)}></RoundButton>)}
+            {days.map((day, i) => <RoundButton size="small" text={daysInEng[i]} isActive={Boolean(day)}></RoundButton>)}
           </View>
         </View>
       </View>

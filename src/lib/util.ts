@@ -1,7 +1,8 @@
 import dayjs from 'dayjs';
 
 export const days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
-export const daysInKorean = ['일', '월', '화', '수', '목', '금', '토'];
+export const daysInKor = ['일', '월', '화', '수', '목', '금', '토'];
+export const daysInEng = ['S', 'M', 'T', 'W', 'T', 'T', 'S'];
 
 import {Schedule} from 'models/schedule';
 import {Alert} from 'react-native';
@@ -27,12 +28,7 @@ export const OneButtonAlert = (
 };
 
 export const getTargetDates = (schedule: Schedule, time: string) => {
-  const activeDays = [];
-  for (const day in schedule) {
-    if (schedule[day]) {
-      activeDays.push(days.indexOf(day));
-    }
-  }
+
 
   const targetDates = [];
   const policy = 2; // 2주
@@ -41,7 +37,7 @@ export const getTargetDates = (schedule: Schedule, time: string) => {
 
   let now = dayjs();
   for (let i = 0; i < policy; i++) {
-    activeDays.forEach((day) => {
+    schedule.forEach((day) => {
       const computed = now.day(day).hour(hour).minute(minute).second(0);
       // 계산된 값이 지금보다 나중일 경우 등록
       if (computed.isAfter(dayjs())) {

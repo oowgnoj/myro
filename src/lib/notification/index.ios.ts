@@ -36,10 +36,7 @@ const setRoutineNotification = (
   schedule: Schedule,
   time: string,
 ) => {
-  console.log('#### schedule', schedule);
-  console.log('#### time', time);
   const targetDates = getTargetDates(schedule, time);
-  console.log('#### target date', targetDates);
   PushNotificationIOS.removeAllPendingNotificationRequests();
 
   targetDates.forEach((date: Date) => {
