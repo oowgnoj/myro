@@ -44,21 +44,14 @@ export const getRoutines = async () => {
 
 export const postRoutine = async (
   contents: number,
-  schedule: Schedule,
+  days: Schedule,
   alarmTime: string,
 ) => {
-  const {mon, tue, wed, thu, fri, sat, sun} = schedule;
   return await axios.post(
     `${DOMAIN_API}/routine`,
     JSON.stringify({
       contents,
-      mon,
-      tue,
-      wed,
-      thu,
-      fri,
-      sat,
-      sun,
+      days,
       alarmTime,
     }),
   );

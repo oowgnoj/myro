@@ -6,15 +6,10 @@ import {daysInKorean} from '../../lib/util';
 
 type Props = {
   days: Array<Number>;
-  handleSchedule?: (text: string, active: boolean) => void;
+  handleSchedule?: (day: number) => void;
 };
 
 const WeekEntry: React.FC<Props> = ({days, handleSchedule}) => {
-  const handleStatus = (text: string, active: boolean) => {
-    handleSchedule(text, active);
-  };
-
-
   return (
     <View style={styles.wrapper}>
       {days.map((isActive, i) => {
@@ -23,7 +18,7 @@ const WeekEntry: React.FC<Props> = ({days, handleSchedule}) => {
             size="medium"
             text={daysInKorean[i]}
             isActive={Boolean(isActive)}
-            handleStatus={handleStatus}
+            handleStatus={() => handleSchedule(i)}
             key={i}
           />
         );

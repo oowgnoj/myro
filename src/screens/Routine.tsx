@@ -48,8 +48,6 @@ const Routine: React.FC<Props> = ({route, navigation}) => {
   const [schedule, setSchedule] = useState([0,0,0,0,0,0,0]);
   const {token} = useContext(authContext)
   const {requestRoutine} = useContext(RoutineContext)
-  // console.log('############## schedule' ,schedule)
-  // console.log('############## time' ,schedule)
 
   useEffect(() => {
     async function fetchContents() {
@@ -134,11 +132,10 @@ const Routine: React.FC<Props> = ({route, navigation}) => {
     }
   };
 
-  const handleSchedule = (text: string, active: boolean) => {
-    const newSchedule = {...schedule};
-    newSchedule[Week[text]] = active;
-    setSchedule(newSchedule);
-
+  const handleSchedule = (day: number) => {
+    const newSchedule = [...schedule];
+    newSchedule[day] = newSchedule[day] ? 0 : 1
+    setSchedule(newSchedule)
     if (!custom) {
       setCustom(true);
     }
@@ -181,7 +178,7 @@ const Routine: React.FC<Props> = ({route, navigation}) => {
                   ? '기억하실 수 있게 \n알람을 보내드려요.'
                   : '미로에서 \n추천해드리는 일정이에요.'}
               </Text>
-              <WeekBoard days={routine.days} handleSchedule={handleSchedule} />
+              <WeekBoard days={custom ? schedule : routine.days} handleSchedule={handleSchedule} />
               <View style={styles.selectForm}>
                 <View style={styles.selectTime}>
                   <TouchableOpacity onPress={showPicker}>

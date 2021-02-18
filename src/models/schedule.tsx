@@ -9,15 +9,8 @@ export enum Week {
   '일' = 'sun',
 }
 
-export interface Schedule {
-  mon: boolean;
-  tue: boolean;
-  wed: boolean;
-  thu: boolean;
-  fri: boolean;
-  sat: boolean;
-  sun: boolean;
-}
+export type Schedule = Array<Number>
+
 
 
 // export class Schedule {
